@@ -5,6 +5,36 @@
 	<span class="subheading">Articles</span>
 {% endblock %}
 
+{# {% block content %}
+
+<p align="center" class="Style1">{{titre}}</p>
+<table border="2" align="center" cellspacing="0" cellpadding="2" >
+<tr bgcolor="#CA9999">
+    <td width="50"><strong>numero</strong></td>
+    <td width="50"><strong>Nom</strong></td>
+    <td width="50"><strong>Prenom</strong></td>
+    <td width="30"><strong>Age</strong></td>
+    <td width="50"><strong>Ville</strong></td>
+</tr>
+{% set i=0 %}
+{% for post in post %}
+{% set i=i+1 %}
+{% if i is odd %}
+<tr bgcolor="#F0F0F0">
+{% else %}
+    <tr bgcolor="#A6A6A6">
+{% endif %}
+    <td>{{post.idpost}}</td>
+    <td>{{post.title}}</td>
+    <td>{{post.chapô}}</td>
+    <td>{{post.content}}</td>
+    <td>{{post.creation_date_fr}}</td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %} #}
+
 {% block content %}
 	<!-- Main Content-->
 	<div class="container px-4 px-lg-5">
@@ -34,3 +64,34 @@
 		</div>
 	</div>
 {% endblock %}
+
+
+{# {% extends "BaseTemplate.html" %}
+{% block title %}Personnes du Carnet{% endblock %}
+{% block head %}
+{{ parent() }}
+<link rel="stylesheet" href="static/css/tabstyle.css" />
+{% endblock %}
+
+{% block content %}
+
+<h2>{{titre}}</h2>
+<table id="jolie" class="centre" >
+<tr>
+    <td>numero</td>
+    <td>Nom</td>
+    <td>Prenom</td>
+    <td>Age</td>
+    <td>Ville</td>
+</tr>
+{% for ami in amis %}
+    <tr>
+    <td>{{ami.ID}}</td>
+    <td>{{ami.NOM}}</td>
+    <td>{{ami.PRENOM}}</td>
+    <td>{{ami.NAISSANCE}}</td>
+    <td>{{ami.VILLE}}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %} #}

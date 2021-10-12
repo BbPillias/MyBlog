@@ -1,37 +1,54 @@
 <?php
-// on inclus le modele
-include 'postManager.php';
 
-require_once 'vendor/autoload.php';
+include 'vendor/autoload.php';
 
-$loader = new \Twig\Loader\FilesystemLoader('view');
-$twig = new \Twig\Environment($loader, array(
-    'cache' => false,
-));
+// Chargement des classes
+require_once('model/PostManager.php');
+require_once('model/CommentManager.php');
 
-echo $twig->render('listPosts.html.twig');
+// On instancie un Carnet
+$car = new List();
+try {
+    // le dossier ou on trouve les templates
+    $loader = new Twig\Loader\FilesystemLoader('view');
 
-// on inclus le modele
-//include 'postManager.php';
+    // initialiser l'environement Twig
+    $twig = new Twig\Environment($loader);
 
-//try {
-// le dossier ou on trouve les templates
-//$loader = new Twig\Loader\FilesystemLoader('view');
+    // load template
+    $template = $twig->load('listPosts.html.twig');
 
-// initialiser l'environement Twig
-//$twig = new Twig\Environment($loader);
+    // on va instancier le modele
+    // et préparer les variables
+    // qu'on va passer au template
+    require_once("postManager.php");
+    $posts = new listPosts();
+    $list = $posts->getPosts();
+    $titre = "Liste des articles";
 
-// load template
-//$template = $twig->load('listPosts.html.twig');
+    // render template
+    echo $template->render(array(
+        'titre' => $titre,
+        'liste' => $posts,
+    ));
 
-//$postManager = new \Berengere\Blog\Model\PostManager();
-//$posts = $postManager->getPosts();
+} catch (Exception $e) {
+    die ('ERROR: ' . $e->getMessage());
+}
+// function post()
+// {
+//     $postManager = new \Berengere\Blog\Model\PostManager();
+//     $commentManager = new \Berengere\Blog\Model\CommentManager();
 
-// render template
-// echo $template->render(array(
-//   'posts' => $posts
-//));
+//     $post = $postManager->getPost($_GET['id']);
+//     $comments = $commentManager->getComments($_GET['id']);
 
-//} catch (Exception $e) {
-die('ERROR: ' . $e->getMessage());
-//}
+//     require('view/post.html.twig');
+// }
+// function listPosts()
+// {
+//     $postManager = new \Berengere\Blog\Model\PostManager();
+//     $posts = $postManager->getPosts();
+
+//     require('view/listPosts.html.twig');
+// }

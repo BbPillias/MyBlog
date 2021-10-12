@@ -3,7 +3,7 @@
     "description": "Création de mon blog",
     "autoload": {
         "psr-4": {
-            "10\\MyBlog\\": "src/"
+            "Berengere\\Blog": "src/"
         }
     },
     "authors": [

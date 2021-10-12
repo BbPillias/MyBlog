@@ -17,7 +17,7 @@ if (isset($_GET['p'])) {
 
 $loader = new \Twig\Loader\FilesystemLoader('view');
 $twig = new \Twig\Environment($loader, array(
-    'cache' => false,
+    'cache' => 'cache',
 ));
 
 switch ($page) {
