@@ -22,7 +22,7 @@ while ($data = $posts->fetch()) {
 
                     <p class="post-meta">
                         Posted by
-                        <a href="about.html">Bérengère</a>
+                        <a href="home.html.twig">Bérengère</a>
                         le <?= $data['creation_date_fr'] ?>
                     </p>
                 </div>

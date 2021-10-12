@@ -1,66 +1,56 @@
 <?php
-require('src/controller/frontend.php');
 
-try {
-    if (isset($_GET['action'])) {
-        if ($_GET['action'] == 'listPosts') {
-            listPosts();
-        }
-        elseif ($_GET['action'] == 'post') {
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                post();
-            }
-            else {
-                throw new Exception('Aucun identifiant de post envoyé');
-            }
-        }
-        elseif ($_GET['action'] == 'addComment') {
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                if (!empty($_POST['author']) && !empty($_POST['comment'])) {
-                    addComment($_GET['id'], $_POST['author'], $_POST['comment']);
-                }
-                else {
-                    throw new Exception('Tous les champs ne sont pas remplis !');
-                }
-            }
-            else {
-                throw new Exception('Aucun identifiant de post envoyé');
-            }
-        }
-        elseif ($_GET['action'] == 'showComment')
-        {
-            if (isset($_GET['id']) && $_GET['id'] > 0)
-            {
-                showComment($_GET['id']);
-            }
-            else
-            {
-                throw new Exception('Aucun identifiant de post modifié envoyé');
-            }
-        }
-        elseif ($_GET['action'] == 'editComment')
-        {
-            if (isset($_GET['id']) && $_GET['id'] > 0 && isset($_GET['post_id']) && $_GET['post_id'] > 0)
-            {
-                if (!empty($_POST['comment'])) 
-                {
-                    editComment($_GET['id'],$_POST['comment'],$_GET['post_id']); 
-                }
-                else
-                    {
-                        throw new Exception('Tous les champs doivent être remplis');
-                    }
-            }
-            else
-            {
-                throw new Exception('Impossible de récupérer l\'id');
-            }
-        }  
-    }
-    else {
-        listPosts();
-    }
+// require_once 'vendor/autoload.php';
+
+// $loader = new \Twig\Loader\FilesystemLoader('view');
+// $twig = new \Twig\Environment($loader);
+
+// echo $twig->render('home.html.twig');
+
+require_once 'vendor/autoload.php';
+
+//routing
+$page = 'home';
+if (isset($_GET['p'])) {
+    $page = $_GET['p'];
 }
-catch(Exception $e) {
-    echo 'Erreur : ' . $e->getMessage();
+
+$loader = new \Twig\Loader\FilesystemLoader('view');
+$twig = new \Twig\Environment($loader, array(
+    'cache' => false,
+));
+
+switch ($page) {
+
+    case 'home':
+        echo $twig->render('home.html.twig');
+        break;
+
+    case 'listPosts':
+        echo $twig->render('listPosts.html.twig');
+        break;
+
+    case 'contact':
+        echo $twig->render('contact.html.twig');
+        break;
+
+    case 'login':
+        echo $twig->render('login.html.twig');
+        break;
+
+    case 'register':
+        echo $twig->render('register.html.twig');
+        break;
+
+    case 'addPost':
+        echo $twig->render('addPost.html.twig');
+        break;
+
+    case 'post':
+        echo $twig->render('post.html.twig');
+        break;
+
+    default:
+        header('HTTP/1.0 404 Not Found');
+        break;
 }
