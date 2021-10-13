@@ -1,5 +1,0 @@
-<?php
-
-namespace Berengere\Blog\Model;
-
-require_once("model/Manager.php");
