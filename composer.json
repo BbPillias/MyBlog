@@ -1,0 +1,20 @@
+{
+    "name": "10/my-blog",
+    "description": "Création de mon blog",
+    "autoload": {
+        "psr-4": {
+            "Berengere\\Blog": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Bérengère Pillias",
+            "email": "berengere.pillias@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "twig/twig": "^3.3",
+        "phpunit/phpunit": "^9.5"
+    }
+}

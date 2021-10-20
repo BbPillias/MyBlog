@@ -1,0 +1,46 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}
+    <h1>
+        My Blog
+    </h1>
+    <span class="subheading">
+        A Blog about me
+    </span>
+{% endblock %}
+
+{% block content %}
+<!-- Main Content-->
+    <main class="mb-4">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <h1 class="text-primary my-4">Bérengère Pillias<br>Bienvenue sur mon blog !</h1>
+                    <section class="container-fluid banner mb-0">
+                        <div class="col-md-3 col-lg-2 col-xl-1">
+                            <img class="photo" src="public/assets/img/photo.JPG" alt="Ma photo">
+                        </div>
+                        <div class="inner-banner">
+                            <img class="logo" src="#" alt="Logo">
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <img src="public/assets/img/cv.PNG">
+                    <p class="text-center"><a href="public/assets/cv.pdf" download="cv_BérengèrePillias.pdf"
+                            title="Télécharger mon CV" target="_blank"><button
+                                class="btn btn-primary">Télécharger</button></a></p>
+                </div>
+            </div>
+            <h3>Etudes :</h3>
+            <p>J'ai intégré le 10 mai 2021 la formation de "Développeur d'application - PHP/Symfony" d'une duréee d'un
+                an chez
+                <a href="https://openclassrooms.com/fr/" target="_blank"
+                    title="Ouvre le site Openclassrooms">Openclassrooms</a>.</p>
+            <p><img class="profil" src="/public/assets/img/.jpg" alt="">J'ai commencé ma formation en 2020 pour passer
+                le titre professionel développeur web et web mobile avec l'
+                <a href="https://www.eni-ecole.fr/" target="_blank" title="Ouvre le site ENI">ENI</a>.</p>
+        </div>
+    </main>
+
+{% endblock %}
