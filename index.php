@@ -1,11 +1,5 @@
 <?php
 
-// require_once 'vendor/autoload.php';
-
-// $loader = new \Twig\Loader\FilesystemLoader('view');
-// $twig = new \Twig\Environment($loader);
-
-// echo $twig->render('home.html.twig');
 
 require_once 'vendor/autoload.php';
 
@@ -17,37 +11,41 @@ if (isset($_GET['p'])) {
 
 $loader = new \Twig\Loader\FilesystemLoader('view');
 $twig = new \Twig\Environment($loader, array(
-    'cache' => 'cache',
+    'cache' => false, // __DIR__ . /tmp,
 ));
+
+$frontController = new Berengere\Blog\Controller\FrontController;
 
 switch ($page) {
 
     case 'home':
-        echo $twig->render('home.html.twig');
+        echo $twig->render('frontend/home.html.twig');
         break;
 
     case 'listPosts':
-        echo $twig->render('listPosts.html.twig');
+        [$twigTemplate, $listPosts] = $frontController->listPosts();
+        echo $twig->render($twigTemplate, compact('listPosts'));
         break;
 
     case 'contact':
-        echo $twig->render('contact.html.twig');
+        echo $twig->render('frontend/contact.html.twig');
         break;
 
     case 'login':
-        echo $twig->render('login.html.twig');
+        echo $twig->render('frontend/login.html.twig');
         break;
 
     case 'register':
-        echo $twig->render('register.html.twig');
+        echo $twig->render('frontend/register.html.twig');
         break;
 
     case 'addPost':
-        echo $twig->render('addPost.html.twig');
+        echo $twig->render('backend/addPost.html.twig');
         break;
 
     case 'post':
-        echo $twig->render('post.html.twig');
+        [$twigTemplate, $post] = $frontController->post($idPost);
+        echo $twig->render($twigTemplate, compact('post'));
         break;
 
     default:
