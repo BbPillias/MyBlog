@@ -44,7 +44,7 @@ switch ($page) {
         break;
 
     case 'post':
-        [$twigTemplate, $post] = $frontController->post($idPost);
+        [$twigTemplate, $post] = $frontController->post();
         echo $twig->render($twigTemplate, compact('post'));
         break;
 

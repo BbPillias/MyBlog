@@ -17,13 +17,12 @@ public function post()
 {
     $postManager = new \Berengere\Blog\Model\PostManager();
     $post = $postManager->getPost($_GET['post_id']);
-    echo var_dump($_GET['post_id']);
-
+  
     $commentManager = new \Berengere\Blog\Model\CommentManager();  
     $comments = $commentManager->getComments($_GET['post-id']);
     
-
     return['frontend/post.html.twig', $post,$comments];
+    
 }
 
 public function addComment($postId, $author, $comment)

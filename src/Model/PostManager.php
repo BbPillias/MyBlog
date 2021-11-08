@@ -26,6 +26,7 @@ class PostManager extends Manager
         $req->execute(array($postId));
         
         $post = $req->fetchAll();
+        var_dump($post);
         
         return $post;
     }
