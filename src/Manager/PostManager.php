@@ -1,9 +1,10 @@
 <?php
 
-namespace Berengere\Blog\Model;
+namespace Berengere\Blog\Manager;
 
+use Berengere\Blog\Core\Database;
 
-class PostManager extends Manager
+class PostManager extends Database
 {
     /**
      * Return All Posts

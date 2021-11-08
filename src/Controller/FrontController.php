@@ -7,7 +7,7 @@ class FrontController {
 
 public function listPosts()
 {
-    $postManager = new \Berengere\Blog\Model\PostManager();
+    $postManager = new \Berengere\Blog\Manager\PostManager();
     $posts = $postManager->getPosts();
 
     return ['frontend/listPosts.html.twig', $posts];
@@ -15,10 +15,10 @@ public function listPosts()
 
 public function post()
 {
-    $postManager = new \Berengere\Blog\Model\PostManager();
+    $postManager = new \Berengere\Blog\Manager\PostManager();
     $post = $postManager->getPost($_GET['post_id']);
   
-    $commentManager = new \Berengere\Blog\Model\CommentManager();  
+    $commentManager = new \Berengere\Blog\Manager\CommentManager();  
     $comments = $commentManager->getComments($_GET['post-id']);
     
     return['frontend/post.html.twig', $post,$comments];
@@ -27,7 +27,7 @@ public function post()
 
 public function addComment($postId, $author, $comment)
 {
-    $commentManager = new \Berengere\Blog\Model\CommentManager();
+    $commentManager = new \Berengere\Blog\Manager\CommentManager();
 
     $affectedLines = $commentManager->postComment($postId, $author, $comment);
 
@@ -41,16 +41,16 @@ public function addComment($postId, $author, $comment)
 
 function showComment($commentId)
 {  
-    $commentManager = new \Berengere\Blog\Model\CommentManager();
+    $commentManager = new \Berengere\Blog\Manager\CommentManager();
  
-    $comment = $commentManager->getComment($_GET['id']);
+    $comment = $commentManager->getComment($_GET['comment_id']);
+    return['backend/updateComment.html.twig', $comment];
  
-    require('backend/updateComment.html.twig');
 }
     
 function editComment($id, $comment, $postId)
 {
-    $commentManager = new \Berengere\Blog\Model\CommentManager();
+    $commentManager = new \Berengere\Blog\Manager\CommentManager();
  
     $modifiedComment = $commentManager->updateComment($id, $comment, $postId);
  

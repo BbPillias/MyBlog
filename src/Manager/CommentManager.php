@@ -1,8 +1,10 @@
     <?php
     namespace Berengere\Blog\Model;
 
+    use Berengere\Blog\Core\Database;
 
-    class CommentManager extends Manager
+
+    class CommentManager extends Database
     {
         public function getComments($postId)
         {
