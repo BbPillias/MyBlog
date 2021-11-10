@@ -15,7 +15,7 @@
 					<!-- Post preview-->
 					<div class="post-preview">
 
-						<a href="index.php?action=post&amp;post_id= ?>">
+						<a href="index.php?action=post&post_id={{ post.post_id }}">
 							<h2 class="post-title">{{post.title}}</h2>
 							<h3 class="post-subtitle">{{post.chapo}}</h3>
 
@@ -29,15 +29,15 @@
 					</div>
 
 					<!-- Divider-->
-					
+
 				</div>
 			</div>
 		</div>
 	{% endfor %}
 	<hr
-					class="my-4"/>
-					<!-- Pager-->
-					<div class="d-flex justify-content-end mb-4">
-						<a class="btn btn-primary text-uppercase" href="#!">Plus d'articles →</a>
-					</div>
+	class="my-4"/>
+	<!-- Pager-->
+	<div class="d-flex justify-content-end mb-4">
+		<a class="btn btn-primary text-uppercase" href="#!">Plus d'articles →</a>
+	</div>
 {% endblock %}
