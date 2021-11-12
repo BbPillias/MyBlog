@@ -1,46 +1,157 @@
 {% extends "layout.html.twig" %}
 
 {% block title %}
-    <h1>
-        My Blog
-    </h1>
-    <span class="subheading">
-        A Blog about me
-    </span>
+	<h1>
+		My Blog
+	</h1>
+	<span class="subheading">
+		A Blog about me
+	</span>
 {% endblock %}
 
 {% block content %}
-<!-- Main Content-->
-    <main class="mb-4">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    <h1 class="text-primary my-4">Bérengère Pillias<br>Bienvenue sur mon blog !</h1>
-                    <section class="container-fluid banner mb-0">
-                        <div class="col-md-3 col-lg-2 col-xl-1">
-                            <img class="photo" src="public/assets/img/photo.JPG" alt="Ma photo">
-                        </div>
-                        <div class="inner-banner">
-                            <img class="logo" src="#" alt="Logo">
-                        </div>
-                    </section>
-                </div>
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    <img src="public/assets/img/cv.PNG">
-                    <p class="text-center"><a href="public/assets/cv.pdf" download="cv_BérengèrePillias.pdf"
-                            title="Télécharger mon CV" target="_blank"><button
-                                class="btn btn-primary">Télécharger</button></a></p>
-                </div>
-            </div>
-            <h3>Etudes :</h3>
-            <p>J'ai intégré le 10 mai 2021 la formation de "Développeur d'application - PHP/Symfony" d'une duréee d'un
-                an chez
-                <a href="https://openclassrooms.com/fr/" target="_blank"
-                    title="Ouvre le site Openclassrooms">Openclassrooms</a>.</p>
-            <p><img class="profil" src="/public/assets/img/.jpg" alt="">J'ai commencé ma formation en 2020 pour passer
-                le titre professionel développeur web et web mobile avec l'
-                <a href="https://www.eni-ecole.fr/" target="_blank" title="Ouvre le site ENI">ENI</a>.</p>
-        </div>
-    </main>
+	<!-- Main Content-->
+	<div class="container">
+		<div class="row ">
+			<div class="col-lg-4 ">
+				<h1 class="text-primary my-4">Bérengère Pillias</h1>
+				<h2>Développeur<br>PHP
+					<img src="public/assets/img/php.png" width="50px" height="50px" alt="Logo">
+					/ Symfony<img src="public/assets/img/symfony.png" width="50px" height="50px" alt="Logo">
+				</h2>
+			</div>
+			<div class="col-lg-4">
+				<img src="public/assets/img/photo.jpg" class="rounded-circle" alt="photo">
+			</div>
+			<div class="offset-1 col-lg-3">
+				<h3>Mon cv</h3>
+				<div class="col-md-10 col-lg-8 col-xl-7">
+					<img class="text-center" src="public/assets/img/cv.PNG" alt="Mon CV" style="width: 50%">
+					<a href="public/assets/cv.pdf" download="cv_BérengèrePillias.pdf" title="Télécharger mon CV" target="_blank">
+						<button class="btn btn-primary">Télécharger</button>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<hr class="star-primary">
+				<h2>A propos de moi</h2>
+				<hr class="star-primary">
+			</div>
+		</div>
+	</div>
+	<!-- About me -->
+	<main class="mb-4">
+		<div class="container px-4 px-lg-5">
+			<div class="row gx-4 gx-lg-5 justify-content-center">
+				<div class="col-md-10 col-lg-8 col-xl-7">
+					<p>J'ai intégré le 10 mai 2021 la formation de "Développeur d'application - PHP/Symfony" d'une duréee d'un an chez
+						<a href="https://openclassrooms.com/fr/" target="_blank" title="Ouvre le site Openclassrooms">Openclassrooms</a>.</p>
+					<p><img class="profil" src="/public/assets/img/.jpg" alt="">J'ai commencé ma formation en 2020 pour passer
+																																																																																					le titre professionel développeur web et web mobile avec l'
+						<a href="https://www.eni-ecole.fr/" target="_blank" title="Ouvre le site ENI">ENI</a>.</p>
+					<p></p>
+					<p>J'ai dejà pu apprendre énormément sur les bases CSS/HTML, le CMS Wordpress ainsi que le framework Bootstrap.</p>
+				</div>
+			</div>
+		</div>
+	</main>
 
+
+	<!-- Portfolio Grid Section -->
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<hr class="star-primary">
+				<h2>Mes Projets</h2>
+				<hr class="star-primary">
+			</div>
+		</div>
+		<div class="row text-center">
+			<div class="col-sm-4 portfolio-item">
+				<h4>Wordpress / Chalets & Caviar</h4>
+				<a href="#" class="portfolio-link" data-toggle="modal">
+					<img src="public/assets/img/chalet.jpg" class="mw-100" alt="chalet">
+
+				</a>
+			</div>
+			<div class="col-sm-4 portfolio-item">
+				<h4>Bootstrap / Festival de plein air</h4>
+				<a href="#" class="portfolio-link" data-toggle="modal">
+					<img src="public/assets/img/film.PNG" class="img-fluid" alt="film">
+				</a>
+			</div>
+			<div class="col-sm-4 portfolio-item">
+				<h4>UML-BDD / ExpressFood</h4>
+				<a href="#" class="portfolio-link" data-toggle="modal">
+					<img src="public/assets/img/MDP.png" class="img-fluid" alt="mdp">
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="container px-4 px-lg-5">
+		<div class="col-lg-12 text-center">
+			<hr class="star-primary">
+			<h2>Me contacter</h2>
+			<hr class="star-primary">
+			<div class="row gx-4 gx-lg-5 justify-content-center">
+				<div class="col-md-10 col-lg-8 col-xl-7">
+					<p>Vous voulez entrer en contact ?</p>
+				</br>Remplissez le formulaire ci-dessous pour m'envoyer un message et je vous répondrai dans les plus brefs délais !
+			</p>
+			<div class="my-5">
+				<!-- * * * * * * * * * * * * * * *-->
+				<!-- * * SB Forms Contact Form * *-->
+				<!-- * * * * * * * * * * * * * * *-->
+				<!-- This form is pre-integrated with SB Forms.-->
+				<!-- To make this form functional, sign up at-->
+				<!-- https://startbootstrap.com/solution/contact-forms-->
+				<!-- to get an API token!-->
+					<form id="contactForm" data-sb-form-api-token="API_TOKEN"> <div class="form-floating">
+						<input class="form-control" id="name" type="text" placeholder="Votre nom" data-sb-validations="required"/>
+						<label for="name">Nom</label>
+						<div class="invalid-feedback" data-sb-feedback="name:required">Votre nom</div>
+					</div>
+					<div class="form-floating">
+						<input class="form-control" id="name" type="text" placeholder="Votre prénom" data-sb-validations="required"/>
+						<label for="name">Prénom</label>
+						<div class="invalid-feedback" data-sb-feedback="name:required">Votre prénom</div>
+					</div>
+					<div class="form-floating">
+						<input class="form-control" id="email" type="email" placeholder="Votre email" data-sb-validations="required,email"/>
+						<label for="email">Email</label>
+						<div class="invalid-feedback" data-sb-feedback="email:required">Un email est nécessaire</div>
+						<div class="invalid-feedback" data-sb-feedback="email:email">Email invalide</div>
+					</div>
+					<div class="form-floating">
+						<textarea class="form-control" id="message" placeholder="Votre message" style="height: 12rem" data-sb-validations="required"></textarea>
+						<label for="message">Message</label>
+						<div class="invalid-feedback" data-sb-feedback="message:required">Laissez votre message ici</div>
+					</div>
+					<br/>
+					<!-- Submit success message-->
+					<!---->
+					<!-- This is what your users will see when the form-->
+					<!-- has successfully submitted-->
+						<div class="d-none" id="submitSuccessMessage"> <div class="text-center mb-3">
+							<div class="fw-bolder">Form submission successful!</div>
+							To activate this form, sign up at
+							<br/>
+							<a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+						</div>
+					</div>
+					<!-- Submit error message-->
+					<!---->
+					<!-- This is what your users will see when there is-->
+					<!-- an error submitting the form-->
+						<div class="d-none" id="submitErrorMessage"> <div class="text-center text-danger mb-3">Erreur lors de l'envoi du message!</div>
+					</div>
+					<!-- Submit Button-->
+					<button class="btn btn-primary text-uppercase disabled" id="submitButton" type="submit">Envoyer</button>
+				</form>
+			</div>
+		</div>
+	</div>
 {% endblock %}

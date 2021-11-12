@@ -14,6 +14,7 @@ $twig = new \Twig\Environment($loader, array(
 ));
 
 $frontController = new Berengere\Blog\Controller\FrontController;
+$backController = new Berengere\Blog\Controller\AdminController;
 $page = null;
 
 switch ($action) {
@@ -29,7 +30,6 @@ switch ($action) {
     
     case 'post':
         [$twigTemplate, $post, $comments] = $frontController->post($_GET['post_id']);
-
         $page = $twig->render($twigTemplate, compact('post'));
         break;
 
@@ -46,7 +46,8 @@ switch ($action) {
         break;
 
     case 'addPost':
-        $page = $twig->render('backend/addPost.html.twig');
+        [$twigTemplate, $post] = $backController->addPost($_POST['post_id'],$_POST['title'],$_POST['chapo'],$_POST ['content'],$_POST ['date_creation'], $_POST['date_update'],$_POST ['users-user-id']);
+        $page = $twig->render($twigTemplate, compact('addPost'));
         break;
 
     default:

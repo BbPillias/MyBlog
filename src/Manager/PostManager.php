@@ -18,6 +18,12 @@ class PostManager extends Database
         return ($req->fetchAll());
     }
 
+    /**
+     * Return one Post from ID
+     *
+     * @param $postId
+     * @return mixed
+     */
     public function getPost($postId)
     {
         $db = $this->dbConnect();
@@ -27,5 +33,20 @@ class PostManager extends Database
         $post = $req->fetch();
 
         return $post;
+    }
+
+    /**
+     * Add a Post
+     *
+     * @param $post
+     * @return bool|false|\PDOStatement
+     */
+    public function addPost($postId, $title, $chapo, $content, $date_creation, $date_update, $users_user_id)
+    {
+        $db = $this->dbConnect();
+        $post = $db->prepare('INSERT INTO posts (title, chapo, content, date_creation, date_update, users-user-id) VALUES (?, ?, ?, NOW(),NOW(), ?');
+        $newPost = $post->execute(array($postId, $title, $chapo, $content, $date_creation, $date_update, $users_user_id));
+
+        return $newPost;
     }
 }

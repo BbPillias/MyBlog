@@ -12,27 +12,19 @@
 			<div class="row gx-4 gx-lg-5 justify-content-center">
 				<div class="col-md-10 col-lg-8 col-xl-7">
 
-                <h3 class="section-heading">{{post.title}}
-                <em>le
-                    {% if post.dateUpdate %}
-                        {{ post.dateUpdate }}
-                    {% else %}
-                        {{ post.dateCreation }}
-                    {% endif %}
-                </em>
-                par
-                {{ post.username }}
-            </h3>
-            <blockquote class="blockquote">{{post.chapo}}</blockquote>
-            <p>{{post.content|nl2br}}
+					<h3 class="section-heading">{{post.title}}</h3>
+					<blockquote class="blockquote">{{ post.created_at_fr }}</blockquote>
+					<blockquote class="blockquote">{{post.chapo}}</blockquote>
+					<p>{{post.content|nl2br}}
 
-                <a href="#!"><img class="img-fluid" src="public/assets/img/post-sample-image.jpg" alt="..."/></a>
+						<a href="#!"><img class="img-fluid" src="public/assets/img/post-sample-image.jpg" alt="..."/></a>
 
-                <a href="http://spaceipsum.com/">Space Ipsum</a>
-                &middot; Images by
-                <a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a>
-            </p>
+						<a href="http://spaceipsum.com/">Space Ipsum</a>
+						&middot; Images by
+						<a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a>
+					</p>
 				</div>
+
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<p>Les commentaires</p>
 				</div>
