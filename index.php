@@ -27,7 +27,7 @@ switch ($action) {
         [$twigTemplate, $listPosts] = $frontController->listPosts();
         $page = $twig->render($twigTemplate, compact('listPosts'));
         break;
-    
+
     case 'post':
         [$twigTemplate, $post, $comments] = $frontController->post($_GET['post_id']);
         $page = $twig->render($twigTemplate, compact('post'));
@@ -45,9 +45,20 @@ switch ($action) {
         echo $twig->render('frontend/register.html.twig');
         break;
 
+        //AJOUTER UN ARTICLE
     case 'addPost':
-        [$twigTemplate, $post] = $backController->addPost($_POST['post_id'],$_POST['title'],$_POST['chapo'],$_POST ['content'],$_POST ['date_creation'], $_POST['date_update'],$_POST ['users-user-id']);
-        $page = $twig->render($twigTemplate, compact('addPost'));
+        if (!empty($_POST)) {
+            [$twigTemplate, $addPost] = $backController->addPost($_POST['title'],$_POST['chapo'],$_POST ['content'],$_POST ['date_creation'], $_POST['date_update'],$_POST ['users_user_id']);
+            $page = $twig->render($twigTemplate, compact('addPost'));
+        } else {
+            echo $twig->render('backend/addFormPost.html.twig');
+        }
+        break;
+
+    case 'addFormPost':
+        echo $twig->render('backend/addFormPost.html.twig');
+        // [$twigTemplate, $addPost] = $backController->addPost($_POST['post_id'],$_POST['title'],$_POST['chapo'],$_POST ['content'],$_POST ['date_creation'], $_POST['date_update'],$_POST ['users-user-id']);
+        // $page = $twig->render($twigTemplate, compact('addPost'));
         break;
 
     default:

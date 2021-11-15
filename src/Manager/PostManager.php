@@ -41,12 +41,12 @@ class PostManager extends Database
      * @param $post
      * @return bool|false|\PDOStatement
      */
-    public function addPost($postId, $title, $chapo, $content, $date_creation, $date_update, $users_user_id)
+    public function addPost( $title, $chapo, $content, $date_creation, $date_update, $author)
     {
         $db = $this->dbConnect();
-        $post = $db->prepare('INSERT INTO posts (title, chapo, content, date_creation, date_update, users-user-id) VALUES (?, ?, ?, NOW(),NOW(), ?');
-        $newPost = $post->execute(array($postId, $title, $chapo, $content, $date_creation, $date_update, $users_user_id));
+        $newPost = $db->prepare('INSERT INTO posts (title, chapo, content, date_creation, date_update, users_user_id) VALUES (?, ?, ?, NOW(),NOW(), ?');
+        $affectedLines = $newPost->execute(array( $title, $chapo, $content, $date_creation, $date_update, $author));
 
-        return $newPost;
+        return $affectedLines;
     }
 }
