@@ -11,8 +11,9 @@ class CommentManager extends Database
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT * FROM comments WHERE posts_post_id = ? ORDER BY comment_date DESC');
         $req->execute(array($postId));
+        $comments = $req->fetchAll();
 
-        return ($req->fetchAll());
+        return $comments;
     }
 
     public function postComment($postId, $comment, $idUser)

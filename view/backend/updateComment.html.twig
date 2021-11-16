@@ -1,1 +1,32 @@
 {% extends "layout.html.twig" %}
+
+{% block title %}
+	<h1>
+		Modifier un commentaire
+	</h1>
+	<span class="subheading"></span>
+{% endblock %}
+
+{% block content %}
+
+	<main class="mb-4">
+		<div class="container px-4 px-lg-5">
+			<div class="row gx-4 gx-lg-5 justify-content-center">
+				<div class="col-md-10 col-lg-8 col-xl-7">
+					<div class="my-5">
+						<form id="contactForm" method="POST" action="index.php?action=editComment&amp;post_id={{post.post_id}}&amp;comment_id={{comment.comment_id}}&amp;">
+							<div class="form-floating">
+								<input class="form-control" id="comment" type="text" name="comment" placeholder="Commentaire de l'article" data-sb-validations="required"/>
+								<label for="title">Commentaire</label>
+								<div class="invalid-feedback" data-sb-feedback="name:required">Commentaire</div>
+							</div>
+							<br/>
+							<input type="submit" name="button" value="Enregistrer"/>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+{% endblock %}

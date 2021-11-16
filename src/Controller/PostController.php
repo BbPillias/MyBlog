@@ -11,9 +11,9 @@ class PostController
     public function listPosts()
     {
         $postManager = new PostManager();
-        $posts = $postManager->getPosts();
+        $listPosts = $postManager->getPosts();
 
-        return ['frontend/listPosts.html.twig', $posts];
+        return ['frontend/listPosts.html.twig', compact('listPosts')];
     }
 
     public function post(int $postId)
@@ -24,8 +24,7 @@ class PostController
         $post = $postManager->getPost($postId);
         $comments = $commentManager->getComments($postId);
 
-        return ['frontend/post.html.twig', $post, $comments];
-        var_dump($comments);
+        return ['frontend/post.html.twig', compact('post', 'comments')];
     }
 
     public function addPost($title, $chapo, $content)
@@ -39,6 +38,18 @@ class PostController
             header('Location: index.php?action=listPosts');
         }
     }
+
+    public function delete(int $postId)
+    {
+        $postManager = new PostManager();
+
+
+        $postManager->delete($postId);
+
+
+        header('Location: index.php?action=listPosts');
+    }
+
 
     public function addComment($postId, $author, $comment)
     {
@@ -58,7 +69,7 @@ class PostController
 
         $comment = $commentManager->getComment($commentId);
 
-        return ['backend/updateComment.html.twig', $comment];
+        return ['backend/updateComment.html.twig', compact('comment')];
     }
 
     public function editComment($id, $comment, $postId)
