@@ -4,16 +4,15 @@ namespace Berengere\Blog\Manager;
 
 use Berengere\Blog\Core\Database;
 
-
 class CommentManager extends Database
 {
     public function getComments($postId)
     {
         $db = $this->dbConnect();
-        $comments = $db->prepare('SELECT * FROM comments WHERE posts_post_id = ? ORDER BY comment_date DESC');
-        $comments->execute(array($postId));
+        $req = $db->prepare('SELECT * FROM comments WHERE posts_post_id = ? ORDER BY comment_date DESC');
+        $req->execute(array($postId));
 
-        return ($comments->fetchAll());
+        return ($req->fetchAll());
     }
 
     public function postComment($postId, $comment, $idUser)

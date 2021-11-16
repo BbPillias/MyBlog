@@ -6,9 +6,8 @@ use Exception;
 use \Berengere\Blog\Manager\PostManager;
 use \Berengere\Blog\Manager\CommentManager;
 
-class FrontController
+class PostController
 {
-
     public function listPosts()
     {
         $postManager = new PostManager();
@@ -20,18 +19,30 @@ class FrontController
     public function post(int $postId)
     {
         $postManager = new PostManager();
-        $post = $postManager->getPost($postId);
-
         $commentManager = new CommentManager();
+
+        $post = $postManager->getPost($postId);
         $comments = $commentManager->getComments($postId);
 
         return ['frontend/post.html.twig', $post, $comments];
+        var_dump($comments);
+    }
+
+    public function addPost($title, $chapo, $content)
+    {
+        $postManager = new PostManager();
+
+        $newPost = $postManager->post($title, $chapo, $content);
+        if ($newPost === false) {
+            throw new Exception('Impossible d\'ajouter l\'article !');
+        } else {
+            header('Location: index.php?action=listPosts');
+        }
     }
 
     public function addComment($postId, $author, $comment)
     {
         $commentManager = new CommentManager();
-
         $affectedLines = $commentManager->postComment($postId, $author, $comment);
 
         if ($affectedLines === false) {
@@ -43,9 +54,10 @@ class FrontController
 
     public function showComment($commentId)
     {
-        $commentManager = new CommentManager();        
+        $commentManager = new CommentManager();
+
         $comment = $commentManager->getComment($commentId);
-        
+
         return ['backend/updateComment.html.twig', $comment];
     }
 
