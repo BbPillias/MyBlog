@@ -1,0 +1,46 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}
+	<h1>
+		Ajouter un article
+	</h1>
+	<span class="subheading"></span>
+{% endblock %}
+
+{% block content %}
+
+	<p>
+		<a href="index.php?action=listPosts">Retour à la liste des articles</a>
+	</p>
+
+	<!-- Main Content-->
+	<main class="mb-4">
+		<div class="container px-4 px-lg-5">
+			<div class="row gx-4 gx-lg-5 justify-content-center">
+				<div class="col-md-10 col-lg-8 col-xl-7">
+					<div class="my-5">
+						<form id="contactForm" method="POST" action="index.php?action=addPost">
+							<div class="form-floating">
+								<input class="form-control" id="titre" type="text" name="title" placeholder="Titre de l'article" data-sb-validations="required"/>
+								<label for="title">Titre</label>
+								<div class="invalid-feedback" data-sb-feedback="name:required">Titre de l'article</div>
+							</div>
+							<div class="form-floating">
+								<input class="form-control" id="chapo" type="textarea" name="chapo" placeholder="Chapo" data-sb-validations="required"/>
+								<label for="chapo">Chapo</label>
+								<div class="invalid-feedback" data-sb-feedback="chapo:required">Chapo de l'article</div>
+							</div>
+							<div class="form-floating">
+								<input class="form-control" id="content" type="textarea" name="content" placeholder="Content" data-sb-validations="required"/>
+								<label for="content">Article</label>
+								<div class="invalid-feedback" data-sb-feedback="content:required">Article</div>
+							</div>
+							<br/>
+							<input type="submit" name="button" value="Enregistrer"/>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}
