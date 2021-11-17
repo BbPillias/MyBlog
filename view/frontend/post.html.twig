@@ -20,16 +20,16 @@
 						<a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a>
 					</p>
 				</div>
-
-				<div class="col-md-10 col-lg-8 col-xl-7">
-					<p>Les commentaires</p>
-					{% for comment in comments %}
-						<blockquote class="blockquote">{{comment.comment_date}}</blockquote>
-						<p>{{comment.comment|nl2br}}</p>
-					{% endfor %}
-				</div>
+				{% for comment in comments %}
+					<div class="col-md-10 col-lg-8 col-xl-7">
+						<p>Les commentaires</p>
+						<p>{{comment.comment_date|nl2br}}
+							{{comment.comment|nl2br}}</p>
+						<a class="btn btn-primary text-uppercase" href="index.php?action=deleteComment&comment_id={{comment.comment_id}}">Supprimer</a>
+											</div>
+				{% endfor %}
 				<div class="d-flex justify-content-end mb-4">
-					<a class="btn btn-primary text-uppercase" href="index.php?action=deletePost&post_id={{ post.post_id}}">Supprimer</a>
+					<a class="btn btn-primary text-uppercase" href="index.php?action=deletePost&post_id={{post.post_id}}">Supprimer</a>
 				</div>
 			</div>
 		</div>

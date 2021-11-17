@@ -43,9 +43,7 @@ class PostController
     {
         $postManager = new PostManager();
 
-
         $postManager->delete($postId);
-
 
         header('Location: index.php?action=listPosts');
     }
@@ -85,5 +83,14 @@ class PostController
             echo 'commentaire : ' . $_POST['comment'];
             header('Location: index.php?action=post&id=' . $postId);
         }
+    }
+
+    public function deleteComment(int $commentId)
+    {
+        $commentManager = new CommentManager();
+
+        $commentManager->deleteComment($commentId);
+
+        header('Location: index.php?action=listPosts');
     }
 }

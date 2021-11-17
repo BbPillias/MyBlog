@@ -83,6 +83,10 @@ class Router
                 $twigTemplate = 'backend/updateComment.html.twig';
                 break;
 
+            case 'deleteComment':
+                [$twigTemplate, $params] = $postController->deleteComment($_GET['comment_id']);
+                break;
+
             default:
                 header('HTTP/1.0 404 Not Found');
                 break;
