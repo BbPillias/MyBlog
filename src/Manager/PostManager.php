@@ -43,17 +43,18 @@ class PostManager extends Database
     public function post($title, $chapo, $content)
     {
         $newPost = $this->dbConnect()
-              ->prepare('INSERT INTO posts ( title, chapo, content, date_creation, date_update) VALUES ( ?, ?, ?, NOW(),NOW())');
+              ->prepare('INSERT INTO posts (title, chapo, content, date_creation, date_update) VALUES ( ?, ?, ?, NOW(),NOW())');
               
         return $newPost->execute(array($title, $chapo, $content));
     }
 
-    public function updatePost($postId, $title, $chapo, $content, $date_creation)
+    public function updatePost($postId, $title, $chapo, $content, $date)
     {
-        $req = $this->dbConnect()
-            ->prepare('UPDATE posts SET title = ?, chapo = ?, content = ?, date_creation = ?, date_update = NOW() WHERE post_id = ?');
+        $modifiedPost = $this->dbConnect()
+            ->prepare('UPDATE posts SET  title = ?, chapo = ?, content = ?, date_creation = ?, date_update = NOW() WHERE post_id = ?');
         
-        return $req->execute(array($postId, $title, $chapo, $content, $date_creation));
+        return $modifiedPost->execute(array($postId, $title, $chapo, $content, $date));
+        
     }
 
     public function delete($postId)

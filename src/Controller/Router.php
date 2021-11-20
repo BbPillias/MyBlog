@@ -22,7 +22,6 @@ class Router
         ));
 
         $postController = new PostController;
-        $page = null;
         $params = [];
 
         switch ($action) {
@@ -39,12 +38,31 @@ class Router
                 [$twigTemplate, $params] = $postController->post($_GET['post_id']);
                 break;
 
+            case 'showPost':
+                [$twigTemplate, $params] = $postController->showPost($_GET['post_id']);
+                break;
+
+            case 'updatePost':
+                if ( isset($_GET['post_id']) && $_GET['post_id'] > 0)
+                {
+                if (!empty($_POST['title']) && !empty($_POST['chapo']) && !empty($_POST['content']) && !empty($_POST['date_creation'])) {
+                     $postController->editPost($_POST['post_id'], $_POST['title'], $_POST['chapo'], $_POST['content'], $_POST['date_creation']);
+                } else {
+                    throw new Exception('Tous les champs doivent être remplis');
+                }
+            }
+                break;
+
+            case 'updateFormPost':
+                $twigTemplate = 'backend/updatePost.html.twig';
+                break;
+
             case 'deletePost':
                 [$twigTemplate, $params] = $postController->delete($_GET['post_id']);
                 break;
 
             case 'contact':
-                $twigTemplate = 'frontend/contact.htm.twig';
+                $twigTemplate = 'frontend/contact.html.twig';
                 break;
 
             case 'login':
@@ -65,10 +83,6 @@ class Router
 
             case 'addFormPost':
                 $twigTemplate = 'backend/addFormPost.html.twig';
-                break;
-
-            case 'editPost':
-                $twigTemplate = 'backend/updateComment.html.twig';
                 break;
 
             case 'addComment':
@@ -92,6 +106,6 @@ class Router
                 break;
         }
 
-        echo $twig->render($twigTemplate, $params);;
+        echo $twig->render($twigTemplate, $params);
     }
 }

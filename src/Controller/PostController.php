@@ -39,6 +39,33 @@ class PostController
         }
     }
 
+    public function showPost($postId)
+    {
+        $postManager = new PostManager();
+
+        $post = $postManager->getPost($postId);
+
+        return ['backend/updatePost.html.twig', compact('post')];
+    }
+
+
+    public function editPost($postId, $title, $chapo, $content, $date)
+    {
+        $postManager = new PostManager();
+
+        $modifiedPost = $postManager->updatePost($postId, $title, $chapo, $content, $date);
+
+        if ($modifiedPost === false) {
+            // Permet de remonter l'erreur jusqu'au bloc try du routeur index.php
+            throw new Exception('Impossible de modifier l\'article !');
+        } else {
+            // header('Location: index.php?action=listPosts');
+            return ['frontend/post.html.twig', compact('post')];
+            // header('Location: index.php?action=post&id=' . $postId);
+        }
+    }
+
+
     public function delete(int $postId)
     {
         $postManager = new PostManager();
@@ -49,17 +76,17 @@ class PostController
     }
 
 
-    public function addComment($postId, $author, $comment)
-    {
-        $commentManager = new CommentManager();
-        $affectedLines = $commentManager->postComment($postId, $author, $comment);
+    // public function addComment($postId, $author, $comment)
+    // {
+    //     $commentManager = new CommentManager();
+    //     $affectedLines = $commentManager->postComment($postId, $author, $comment);
 
-        if ($affectedLines === false) {
-            throw new Exception('Impossible d\'ajouter le commentaire !');
-        } else {
-            header('Location: index.php?action=post&id=' . $postId);
-        }
-    }
+    //     if ($affectedLines === false) {
+    //         throw new Exception('Impossible d\'ajouter le commentaire !');
+    //     } else {
+    //         header('Location: index.php?action=post&id=' . $postId);
+    //     }
+    // }
 
     public function showComment($commentId)
     {
@@ -70,20 +97,20 @@ class PostController
         return ['backend/updateComment.html.twig', compact('comment')];
     }
 
-    public function editComment($id, $comment, $postId)
-    {
-        $commentManager = new CommentManager();
+    // public function editComment($id, $comment, $postId)
+    // {
+    //     $commentManager = new CommentManager();
 
-        $modifiedComment = $commentManager->updateComment($id, $comment, $postId);
+    //     $modifiedComment = $commentManager->updateComment($id, $comment, $postId);
 
-        if ($modifiedComment === false) {
-            // Permet de remonter l'erreur jusqu'au bloc try du routeur index.php
-            throw new Exception('Impossible de modifier le commentaire !');
-        } else {
-            echo 'commentaire : ' . $_POST['comment'];
-            header('Location: index.php?action=post&id=' . $postId);
-        }
-    }
+    //     if ($modifiedComment === false) {
+    //         // Permet de remonter l'erreur jusqu'au bloc try du routeur index.php
+    //         throw new Exception('Impossible de modifier le commentaire !');
+    //     } else {
+    //         echo 'commentaire : ' . $_POST['comment'];
+    //         header('Location: index.php?action=post&id=' . $postId);
+    //     }
+    // }
 
     public function deleteComment(int $commentId)
     {

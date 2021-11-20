@@ -7,6 +7,7 @@
 
 {% block content %}
 	<article class="mb-4">
+		<a class="btn text-uppercase" href="index.php?action=listPosts">Retour liste des articles</a>
 		<div class="container px-4 px-lg-5">
 			<div class="row gx-4 gx-lg-5 justify-content-center">
 				<div class="col-md-10 col-lg-8 col-xl-7">
@@ -26,10 +27,11 @@
 						<p>{{comment.comment_date|nl2br}}
 							{{comment.comment|nl2br}}</p>
 						<a class="btn btn-primary text-uppercase" href="index.php?action=deleteComment&comment_id={{comment.comment_id}}">Supprimer</a>
-											</div>
+					</div>
 				{% endfor %}
 				<div class="d-flex justify-content-end mb-4">
 					<a class="btn btn-primary text-uppercase" href="index.php?action=deletePost&post_id={{post.post_id}}">Supprimer</a>
+					<a class="btn btn-primary text-uppercase" href="index.php?action=showPost&amp;post_id={{ post.post_id }}">Modifier</a>
 				</div>
 			</div>
 		</div>
