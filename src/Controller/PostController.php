@@ -49,19 +49,19 @@ class PostController
     }
 
 
-    public function editPost($postId, $title, $chapo, $content, $date)
+    public function editPost($postId,$title, $chapo, $content)
     {
         $postManager = new PostManager();
 
-        $modifiedPost = $postManager->updatePost($postId, $title, $chapo, $content, $date);
+        $modifiedPost = $postManager->updatePost($_GET['post_id'],$title, $chapo, $content);
 
         if ($modifiedPost === false) {
-            // Permet de remonter l'erreur jusqu'au bloc try du routeur index.php
+
             throw new Exception('Impossible de modifier l\'article !');
         } else {
             // header('Location: index.php?action=listPosts');
-            return ['frontend/post.html.twig', compact('post')];
-            // header('Location: index.php?action=post&id=' . $postId);
+            // return ['frontend/post.html.twig', compact('post')];
+             header('Location: index.php?action=post&post_id=' . $postId);
         }
     }
 

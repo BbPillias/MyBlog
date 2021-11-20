@@ -43,14 +43,12 @@ class Router
                 break;
 
             case 'updatePost':
-                if ( isset($_GET['post_id']) && $_GET['post_id'] > 0)
-                {
-                if (!empty($_POST['title']) && !empty($_POST['chapo']) && !empty($_POST['content']) && !empty($_POST['date_creation'])) {
-                     $postController->editPost($_POST['post_id'], $_POST['title'], $_POST['chapo'], $_POST['content'], $_POST['date_creation']);
+
+                if (!empty($_POST['post_id']) && !empty($_POST['title']) && !empty($_POST['chapo']) && !empty($_POST['content'])) {
+                    $postController->editPost($_POST['post_id'], $_POST['title'], $_POST['chapo'], $_POST['content']);
                 } else {
                     throw new Exception('Tous les champs doivent être remplis');
                 }
-            }
                 break;
 
             case 'updateFormPost':
