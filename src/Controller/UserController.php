@@ -5,7 +5,7 @@ namespace Berengere\Blog\Controller;
 use Exception;
 use \Berengere\Blog\Manager\UserManager;
 
-class PostController
+class UserController
 {
     public function addUser($username, $email, $password)
     {

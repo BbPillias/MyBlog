@@ -46,7 +46,7 @@ class PostManager extends Database
               ->prepare('INSERT INTO posts (title, chapo, content, date_creation, date_update) VALUES ( ?, ?, ?, NOW(),NOW())');
               
         return $newPost->execute(array($title, $chapo, $content));
-    }
+    }  
 
     public function updatePost( $postId, $title, $chapo, $content)
     {

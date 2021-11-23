@@ -1,43 +1,39 @@
 {% extends "layout.html.twig" %}
 
 {% block title %}
-<h1>My Blog</h1>
-<span class="subheading">A Blog about me</span>
+	<h1>My Blog</h1>
+	<span class="subheading">A Blog about me</span>
 {% endblock %}
 
 {% block content %}
 
-<div class="container-fluid">
-                <!-- Demo content-->
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-10 col-xl-7 mx-auto">
-                            <h3 class="display-4">Se connecter</h3>
-                            
-                            <form>
-                                <div class="form-group mb-3">
-                                    <input id="inputEmail" type="email" placeholder="Adresse email" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <input id="inputPassword" type="password" placeholder="Mot de passe" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
-                                </div>
-                                <div class="custom-control custom-checkbox mb-3">
-                                    <input id="customCheck1" type="checkbox" checked class="custom-control-input">
-                                    <label for="customCheck1" class="custom-control-label">Se souvenir de moi</label>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Se connecter</button>
-                                <a href="/view/frontend/register.html.twig" class="btn btn-link">
-								
-							</a>
-                                
-                            </form>
-                        </div>
-                    </div>
-                </div><!-- End -->
+	<div
+		class="container-fluid">
+		<!-- Demo content-->
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 col-xl-7 mx-auto">
+					<h3 class="display-4">Se connecter</h3>
 
-            </div>
-        </div><!-- End -->
+					<form>
+						<div class="form-group mb-3">
+							<input id="inputEmail" type="email" placeholder="Adresse email" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+						</div>
+						<div class="form-group mb-3">
+							<input id="inputPassword" type="password" placeholder="Mot de passe" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+						</div>
+						<div class="custom-control custom-checkbox mb-3">
+							<input id="customCheck1" type="checkbox" checked class="custom-control-input">
+							<label for="customCheck1" class="custom-control-label">Se souvenir de moi</label>
+						</div>
+						<button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Se connecter</button>
+					</form>
+				<a class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm" href="index.php?action=register">S'inscrire</a>
+				</div>
+			</div>
+		</div>
+		<!-- End -->
 
-    </div>
+	</div>
 </div>
-{% endblock %}
+<!-- End --></div></div>{% endblock %}
