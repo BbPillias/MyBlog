@@ -7,6 +7,7 @@
 
 {% block content %}
 	<article class="mb-4">
+		<a class="btn text-uppercase" href="index.php?action=listPosts">Retour liste des articles</a>
 		<div class="container px-4 px-lg-5">
 			<div class="row gx-4 gx-lg-5 justify-content-center">
 				<div class="col-md-10 col-lg-8 col-xl-7">
@@ -23,14 +24,17 @@
 				{% for comment in comments %}
 					<div class="col-md-10 col-lg-8 col-xl-7">
 						<p>Les commentaires</p>
-						<blockquote class="blockquote"></blockquote>
-						<blockquote class="blockquote">{{comment.comment_date}}</blockquote>
-						<p>{{comment.comment|nl2br}}</p>
+						<p>{{comment.comment_date|nl2br}}
+							{{comment.comment|nl2br}}</p>
+						<a class="btn btn-primary text-uppercase" href="index.php?action=deleteComment&comment_id={{comment.comment_id}}">Supprimer</a>
+						<a class="btn btn-primary text-uppercase" href="index.php?action=showComment&amp;comment_id={{ comment.comment_id }}">Modifier</a>
 					</div>
 				{% endfor %}
 				<div class="d-flex justify-content-end mb-4">
-			<a class="btn btn-primary text-uppercase" href="index.php?action=updateComment">Modifier le commentaire →</a>
-		</div>
+					<a class="btn btn-primary text-uppercase" href="index.php?action=addFormComment&post_id={{post.post_id}}">Ajouter un commentaire →</a>
+					<a class="btn btn-primary text-uppercase" href="index.php?action=deletePost&post_id={{post.post_id}}">Supprimer</a>
+					<a class="btn btn-primary text-uppercase" href="index.php?action=showPost&amp;post_id={{ post.post_id }}">Modifier</a>
+				</div>
 			</div>
 		</div>
 	</article>

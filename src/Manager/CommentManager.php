@@ -12,16 +12,21 @@ class CommentManager extends Database
         $req = $db->prepare('SELECT * FROM comments WHERE posts_post_id = ? ORDER BY comment_date DESC');
         $req->execute(array($postId));
 
-        return ($req->fetchAll());
+        return $req->fetchAll();
     }
 
-    public function postComment($postId, $comment, $idUser)
+    /**
+     * Add a Comment
+     *
+     * @param $comment
+     * @return bool|false|\PDOStatement
+     */
+    public function postComment($comment, $postId)
     {
-        $db = $this->dbConnect();
-        $comments = $db->prepare('INSERT INTO comments (comment, comment_date, posts_post_id, users_user_id) VALUES(?, NOW(), ?,? )');
-        $affectedLines = $comments->execute(array($comment, $postId, $idUser));
+        $newComment = $this->dbConnect()
+            ->prepare('INSERT INTO comments (comment, comment_date, is_valid, posts_post_id, users_user_id) VALUES(?, NOW(), ?, ?, ? )');
 
-        return $affectedLines;
+        return $newComment->execute(array($comment, $postId));
     }
 
     public function getComment($commentId)
@@ -29,17 +34,23 @@ class CommentManager extends Database
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT comment_id, comment, is_valid, posts_post_id, users_user_id, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE comment_id = ?');
         $req->execute(array($commentId));
-        $comment = $req->fetch();
 
-        return $comment;
+        return  $req->fetch();
     }
 
-    public function updateComment($id, $comment)
+    public function updateComment($commentId, $comment, $valid)
+    {
+        $modifiedComment = $this->dbConnect()
+            ->prepare('UPDATE comments SET comment = ?, comment_date = NOW(), is_valid = ? WHERE comment_id = ?');
+
+        return $modifiedComment->execute(array($comment, $valid, $commentId));
+    }
+
+    public function deleteComment($commentId)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('UPDATE comments SET comment = ?, comment_date = NOW() WHERE id = ?');
-        $modifiedComment = $req->execute(array($comment, $id));
+        $req = $db->prepare('DELETE FROM comments WHERE comment_id =?');
 
-        return $modifiedComment;
+        return $req->execute([$commentId]);
     }
 }

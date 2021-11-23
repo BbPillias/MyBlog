@@ -22,35 +22,37 @@ class Router
         ));
 
         $postController = new PostController;
-        $page = null;
+        $params = [];
 
         switch ($action) {
 
             case 'home':
-                $page = $twig->render('frontend/home.html.twig');
+                $twigTemplate = 'frontend/home.html.twig';
                 break;
 
             case 'listPosts':
-                [$twigTemplate, $listPosts] = $postController->listPosts();
-                $page = $twig->render($twigTemplate, compact('listPosts'));
+                [$twigTemplate, $params] = $postController->listPosts();
                 break;
 
             case 'post':
-                [$twigTemplate, $post] = $postController->post($_GET['post_id']);
-                [$twigTemplate, $comments] = $postController->post($_GET['post_id']);
-                $page = $twig->render($twigTemplate, compact('post'));
+                [$twigTemplate, $params] = $postController->post($_GET['post_id']);
                 break;
 
-            case 'contact':
-                $page = $twig->render('frontend/contact.html.twig');
+            case 'showPost':
+                [$twigTemplate, $params] = $postController->showPost($_GET['post_id']);
                 break;
 
-            case 'login':
-                $page = $twig->render('frontend/login.html.twig');
+            case 'updatePost':
+
+                if (!empty($_POST['post_id']) && !empty($_POST['title']) && !empty($_POST['chapo']) && !empty($_POST['content'])) {
+                    $postController->editPost($_POST['post_id'], $_POST['title'], $_POST['chapo'], $_POST['content']);
+                } else {
+                    throw new Exception('Tous les champs doivent être remplis');
+                }
                 break;
 
-            case 'register':
-                $page = $twig->render('frontend/register.html.twig');
+            case 'updateFormPost':
+                $twigTemplate = 'backend/updatePost.html.twig';
                 break;
 
             case 'addPost':
@@ -62,17 +64,62 @@ class Router
                 break;
 
             case 'addFormPost':
-                echo $twig->render('backend/addFormPost.html.twig');
+                $twigTemplate = 'backend/addFormPost.html.twig';
+                break;
+
+            case 'deletePost':
+                [$twigTemplate, $params] = $postController->delete($_GET['post_id']);
+                break;
+
+            case 'showComment':
+                [$twigTemplate, $params] = $postController->showComment($_GET['comment_id']);
                 break;
 
             case 'updateComment':
-                echo $twig->render('backend/updateComment.html.twig');
+                if (!empty($_POST['comment_id']) && !empty($_POST['comment']) && !empty($_POST['is_valid']) && !empty($_POST['posts_post_id']) && !empty($_POST['user_user_id'])) {
+                    $postController->editComment($_POST['comment_id'], $_POST['comment'], $_POST['is_valid'], $_POST['posts_post_id'], $_POST['user_user_id']);
+                } else {
+                    throw new Exception('Tous les champs doivent être remplis');
+                }
+                break;
+
+            case 'updateFormComment':
+                $twigTemplate = 'frontend/updateComment.html.twig';
+                break;
+
+            case 'addComment':
+                if (!empty($_POST['comment'])) {
+                    $postController->addComment($_POST['comment'], $_GET['post_id']);
+                } else {
+                    throw new Exception('Tous les champs ne sont pas remplis !');
+                }
+                break;
+
+            case 'addFormComment':
+                $twigTemplate = 'frontend/addFormComment.html.twig';
+                break;
+
+            case 'deleteComment':
+                [$twigTemplate, $params] = $postController->deleteComment($_GET['comment_id']);
+                break;
+
+            case 'contact':
+                $twigTemplate = 'frontend/contact.html.twig';
+                break;
+
+            case 'login':
+                $twigTemplate = 'frontend/login.html.twig';
+                break;
+
+            case 'register':
+                $twigTemplate = 'frontend/register.html.twig';
                 break;
 
             default:
                 header('HTTP/1.0 404 Not Found');
                 break;
         }
-        echo $page;
+
+        echo $twig->render($twigTemplate, $params);
     }
 }

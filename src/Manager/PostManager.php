@@ -15,7 +15,8 @@ class PostManager extends Database
     {
         $db = $this->dbConnect();
         $req = $db->query('SELECT * FROM posts');
-        return ($req->fetchAll());
+
+        return $req->fetchAll();
     }
 
     /**
@@ -26,13 +27,11 @@ class PostManager extends Database
      */
     public function getPost($postId)
     {
-        $db = $this->dbConnect();
-        $req = $db->prepare('SELECT post_id, title, chapo, content, DATE_FORMAT(date_creation, \'%d/%m/%Y à %Hh%imin%ss\') AS created_at_fr FROM posts WHERE post_id = ?');
-        $req->execute(array($postId));
+         $req = $this->dbConnect()
+            ->prepare('SELECT post_id, title, chapo, content, DATE_FORMAT(date_creation, \'%d/%m/%Y à %Hh%imin%ss\') AS created_at_fr FROM posts WHERE post_id = ?');
+        $req->execute([$postId]);
 
-        $post = $req->fetch();
-
-        return $post;
+        return $req->fetch();
     }
 
     /**
@@ -43,19 +42,25 @@ class PostManager extends Database
      */
     public function post($title, $chapo, $content)
     {
-        $db = $this->dbConnect();
-        $newPost = $db->prepare('INSERT INTO posts ( title, chapo, content, date_creation, date_update) VALUES ( ?, ?, ?, NOW(),NOW())');
-        $affectedLines = $newPost->execute(array($title, $chapo, $content));
+        $newPost = $this->dbConnect()
+              ->prepare('INSERT INTO posts (title, chapo, content, date_creation, date_update) VALUES ( ?, ?, ?, NOW(),NOW())');
+              
+        return $newPost->execute(array($title, $chapo, $content));
+    }  
 
-        return $affectedLines;
+    public function updatePost( $postId, $title, $chapo, $content)
+    {
+        $modifiedPost = $this->dbConnect()
+            ->prepare('UPDATE posts SET  title = ?, chapo = ?, content = ?, date_update = NOW() WHERE post_id = ?');
+        
+        return $modifiedPost->execute(array($title, $chapo, $content, $postId));
     }
 
-    public function updatePost($postId, $title, $chapo, $content, $date_creation)
+    public function delete($postId)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('UPDATE posts SET title = ?, chapo = ?, content = ?, date_creation = ?, date_update = NOW() WHERE post_id = ?');
-        $modifiedPost = $req->execute(array($postId, $title, $chapo, $content, $date_creation));
-   
-        return $modifiedPost;
+        $req = $db->prepare('DELETE FROM posts WHERE post_id =?');
+
+        return $req->execute([$postId]);
     }
 }

@@ -1,0 +1,47 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}
+	<h1>
+		Modifier un article
+	</h1>
+	<span class="subheading"></span>
+{% endblock %}
+
+{% block content %}
+
+	<main class="mb-4">
+		<a class="btn text-uppercase" href="index.php?action=post&amp;post_id={{ post.post_id }}">Retour article</a>
+		<div class="container px-4 px-lg-5">
+			<div class="row gx-4 gx-lg-5 justify-content-center">
+				<div class="col-md-10 col-lg-8 col-xl-7">
+					<div class="my-5">
+						<form id="contactForm" method="POST" action="index.php?action=updatePost&amp;post_id={{ post.post_id }}">
+							<input type="hidden" name="post_id" value="{{ post.post_id }}">
+							<div class="form-floating">
+								<input class="form-control" id="title" type="text" name="title" value="{{post.title}}" placeholder="Titre de l'article" data-sb-validations="required"/>
+								<label for="title">Titre</label>
+								<div class="invalid-feedback" data-sb-feedback="titre:required">{{post.title}}</div>
+							</div>
+							<div class="form-floating">
+								<input class="form-control" id="chapo" type="text" name="chapo" value="{{post.chapo}}" placeholder="Chapo" data-sb-validations="required"/>
+								<label for="chapo">Chapo</label>
+								<div class="invalid-feedback" data-sb-feedback="chapo:required">{{post.chapo}}</div>
+							</div>
+							<div class="form-floating">
+								<input class="form-control" id="content" type="textarea" name="content" value="{{post.content}}" placeholder="Content" data-sb-validations="required"/>
+								<label for="content">Article</label>
+								<div class="invalid-feedback" data-sb-feedback="content:required">{{post.content|nl2br}}</div>
+							</div>
+							<input type="hidden" name="date_creation" value="{{ post.date_creation }}">
+							<input type="hidden" name="date_update" value="{{ post.date_update }}">
+
+							<br/>
+							<input type="submit" name="button" value="Enregistrer"/>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+{% endblock %}
