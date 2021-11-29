@@ -43,7 +43,6 @@ class Router
                 break;
 
             case 'updatePost':
-
                 if (!empty($_POST['post_id']) && !empty($_POST['title']) && !empty($_POST['chapo']) && !empty($_POST['content'])) {
                     $postController->editPost($_POST['post_id'], $_POST['title'], $_POST['chapo'], $_POST['content']);
                 } else {
@@ -76,7 +75,7 @@ class Router
                 break;
 
             case 'updateComment':
-                if (!empty($_POST['comment_id']) && !empty($_POST['comment']) && !empty($_POST['is_valid']) && !empty($_POST['posts_post_id']) && !empty($_POST['user_user_id'])) {
+                if (!empty($_POST['comment_id']) && !empty($_POST['comment'])  && !empty($_POST['is_valid']) && !empty($_POST['posts_post_id'])&& !empty($_POST['user_user_id'])) {
                     $postController->editComment($_POST['comment_id'], $_POST['comment'], $_POST['is_valid'], $_POST['posts_post_id'], $_POST['user_user_id']);
                 } else {
                     throw new Exception('Tous les champs doivent être remplis');
@@ -89,14 +88,10 @@ class Router
 
             case 'addComment':
                 if (!empty($_POST['comment'])) {
-                    $postController->addComment($_POST['comment'], $_GET['post_id']);
+                    $postController->addComment($_POST['comment'], $_POST['is_valid'], $_POST['posts_post_id'], $_POST['users_user_id']);
                 } else {
                     throw new Exception('Tous les champs ne sont pas remplis !');
                 }
-                break;
-
-            case 'addFormComment':
-                $twigTemplate = 'frontend/addFormComment.html.twig';
                 break;
 
             case 'deleteComment':

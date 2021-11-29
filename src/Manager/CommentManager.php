@@ -21,13 +21,14 @@ class CommentManager extends Database
      * @param $comment
      * @return bool|false|\PDOStatement
      */
-    public function postComment($comment, $postId)
+    public function addComment($comment, $valid, $postId, $userId)
     {
         $newComment = $this->dbConnect()
             ->prepare('INSERT INTO comments (comment, comment_date, is_valid, posts_post_id, users_user_id) VALUES(?, NOW(), ?, ?, ? )');
 
-        return $newComment->execute(array($comment, $postId));
+        return $newComment->execute(array($comment, $valid, $postId, $userId));
     }
+
 
     public function getComment($commentId)
     {
@@ -42,7 +43,6 @@ class CommentManager extends Database
     {
         $modifiedComment = $this->dbConnect()
             ->prepare('UPDATE comments SET comment = ?, comment_date = NOW(), is_valid = ? WHERE comment_id = ?');
-
         return $modifiedComment->execute(array($comment, $valid, $commentId));
     }
 

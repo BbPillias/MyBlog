@@ -52,7 +52,7 @@ class PostController
     {
         $postManager = new PostManager();
 
-        $modifiedPost = $postManager->updatePost($_GET['post_id'], $title, $chapo, $content);
+        $modifiedPost = $postManager->updatePost($postId, $title, $chapo, $content);
 
         if ($modifiedPost === false) {
 
@@ -71,12 +71,21 @@ class PostController
         header('Location: index.php?action=listPosts');
     }
 
-    public function addComment($comment, $postId)
+    public function comment($postId)
     {
         $commentManager = new CommentManager();
-        $affectedLines = $commentManager->postComment($comment, $postId);
 
-        if ($affectedLines === false) {
+        $comment = $commentManager->getComments($postId);
+
+        return ['frontend/addFormComment.html.twig', compact('comment')];
+    }
+
+    public function addComment($comment, $valid, $postId, $userId)
+    {
+        $commentManager = new CommentManager();
+        $newComment = $commentManager->addComment($comment, $valid, $postId, $userId);
+
+        if ($newComment === false) {
             throw new Exception('Impossible d\'ajouter le commentaire !');
         } else {
             header('Location: index.php?action=post&post_id=' . $postId);
@@ -97,11 +106,11 @@ class PostController
         $commentManager = new CommentManager();
 
         $modifiedComment = $commentManager->updateComment($commentId, $comment, $valid, $postId, $userId);
-
+        
         if ($modifiedComment === false) {
             throw new Exception('Impossible de modifier le commentaire !');
         } else {
-            header('Location: index.php?action=post&post&id=' . $postId);
+            header('Location: index.php?action=post&post_id=' . $postId);
         }
     }
 
