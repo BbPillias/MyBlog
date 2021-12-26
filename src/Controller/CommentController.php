@@ -16,10 +16,10 @@ class CommentController
         return ['frontend/addFormComment.html.twig', compact('comment')];
     }
 
-    public function addComment($comment, $valid, $postId, $userId)
+    public function addComment($comment, $postId, $userId)
     {
         $commentManager = new CommentManager();
-        $newComment = $commentManager->addComment($comment, $valid, $postId, $userId);
+        $newComment = $commentManager->addComment($comment, $postId, $userId);
 
         if ($newComment === false) {
             throw new Exception('Impossible d\'ajouter le commentaire !');

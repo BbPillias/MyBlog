@@ -14,29 +14,27 @@
 					<p>Inscrivez vous et exprimez vous grâce aux commentaires!
 					</p>
 					<div class="my-5">
-						<form id="contactForm" method="POST" action="index.php?action=register">
+						<form id="contactForm" method="POST" action="index.php?action=addUser">
 							<div class="form-floating">
 								<input class="form-control" id="name" name="username" type="text" placeholder="Votre nom" data-sb-validations="required"/>
-								<label for="name">Nom</label>
-								<div class="invalid-feedback" data-sb-feedback="name:required">Votre nom</div>
+								<label for="username">Nom</label>
+								<div class="invalid-feedback" data-sb-feedback="username:required">Votre nom</div>
 							</div>
 							<div class="form-floating">
 								<input class="form-control" id="email" name="email" type="email" placeholder="Votre email" data-sb-validations="required,email"/>
 								<label for="email">Email</label>
 								<div class="invalid-feedback" data-sb-feedback="email:required">Un email est nécessaire</div>
-								<div class="invalid-feedback" data-sb-feedback="email:email">Email invalide</div>
+							
 							</div>
 							<div class="form-floating">
 								<input class="form-control" id="password" name="password" type="password" placeholder="Votre mot de passe" data-sb-validations="required,email"/>
 								<label for="password">Mot de passe</label>
-								<div class="invalid-feedback" data-sb-feedback="email:required">Un mot de passe est nécessaire</div>
-								<div class="invalid-feedback" data-sb-feedback="email:email">Mot de passe invalide</div>
+								<div class="invalid-feedback" data-sb-feedback="password:required">Un mot de passe est nécessaire</div>
+							
 							</div>
-
+							<input type="hidden" name="user_status" value="{{ 'user' }}">
 							<br/>
-							<div class="d-none" id="submitErrorMessage">
-								<div class="text-center text-danger mb-3">Erreur lors de l'envoi du message!</div>
-							</div>
+							
 							<!-- Submit Button-->
 							<input type="submit" name="button" value="S'enregistrer"/>
 						</form>
