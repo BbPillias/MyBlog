@@ -5,6 +5,9 @@ namespace Berengere\Blog\Controller;
 use Berengere\Blog\Controller\PostController;
 use Berengere\Blog\Controller\CommentController;
 use Berengere\Blog\Manager\PostManager;
+use Berengere\Blog\Manager\CommentManager;
+use Berengere\Blog\Manager\UserManager;
+use Berengere\Blog\Manager\SessionManager;
 use Exception;
 
 class Router
@@ -26,10 +29,12 @@ class Router
         
 
         $postManager = new PostManager();
+        $commentManager = new CommentManager();
+        $userManager = new UserManager();
         $postController = new PostController($postManager);
-        $commentController = new CommentController;
-        $loginController = new LoginController;
-        $params = [];
+        $commentController = new CommentController($commentManager);
+        $loginController = new LoginController($userManager);
+        $params = ['email' => SessionManager::getInstance()->get('email'), 'username' => SessionManager::getInstance()->get('username')];
 
         switch ($action) {
 

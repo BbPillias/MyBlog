@@ -24,9 +24,9 @@ class UserManager extends Database
     public function login($email, $password)
     {
         $req = $this->dbConnect()
-            ->prepare('SELECT user_id, email, username FROM users WHERE email = \'?\' AND password = \'?\'');
+            ->prepare('SELECT user_id, email, username FROM users WHERE email = :email AND password = :password');
 
-        $req->execute([$email, $password]);
+        $req->execute(compact('email', 'password'));
        
         return  $req->fetch();
         

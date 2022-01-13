@@ -3,28 +3,31 @@
 namespace Berengere\Blog\Controller;
 
 use Exception;
-use \Berengere\Blog\Manager\PostManager;
-use \Berengere\Blog\Manager\CommentManager;
 use \Berengere\Blog\Manager\UserManager;
 use \Berengere\Blog\Manager\SessionManager;
 
 class LoginController
 {
-    
+    private UserManager $userManager;
+
+    public function __construct(UserManager $userManager)
+    {
+        $this->userManager = $userManager;
+    }
+
     public function connect($email, $password)
     {
-        $userManager = new UserManager();
+        $loginUser = $this->userManager->login($email, $password);
+       
 
-        $loginUser = $userManager->login($email, $password);
-        var_dump($loginUser);
         if ($loginUser === false) {
             throw new Exception('email ou mot de passe incorrect !');
         } else {
             $session = SessionManager::getInstance();
-            
+
             $session->set('email', $email);
-            $session->set('username', $loginUser ['username']);
-                 
+            $session->set('username', $loginUser['username']);
+
             header('Location: index.php?action=home');
         }
     }

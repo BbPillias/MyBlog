@@ -43,7 +43,7 @@
 					</ul>
 					<div class="collapse navbar-collapse" id="navbarResponsive">
 						<ul class="navbar-nav ms-auto py-4 py-lg-0">
-							{% if session.user_id > 0 %}
+							{% if email %}
 								<a class="dropdown-item nav-logout" href="index.php?action=logout">Déconnexion</a>
 							{% else %}
 								<li class="nav-item">
@@ -63,14 +63,11 @@
 				<div class="container position-relative px-4 px-lg-5">
 					<div class="row gx-4 gx-lg-5 justify-content-center">
 
-						{% if session.user_status == 'admin' %}
+						{% if username %}
 							<p>Bienvenue administrateur
-								{{ session.username}}
+								{{ username}}
 							</p>
-						{% elseif session.user_status == 'user' %}
-							<p>Bienvenue sur mon blog
-								{{ session.username}}
-							</p>
+						
 						{% endif %}
 						<div class="col-md-10 col-lg-8 col-xl-7">
 							<div class="site-heading"> {% block title %}{% endblock %}
