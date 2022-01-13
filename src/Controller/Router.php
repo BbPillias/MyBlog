@@ -3,6 +3,11 @@
 namespace Berengere\Blog\Controller;
 
 use Berengere\Blog\Controller\PostController;
+use Berengere\Blog\Controller\CommentController;
+use Berengere\Blog\Manager\PostManager;
+use Berengere\Blog\Manager\CommentManager;
+use Berengere\Blog\Manager\UserManager;
+use Berengere\Blog\Manager\SessionManager;
 use Exception;
 
 class Router
@@ -18,11 +23,18 @@ class Router
 
         $loader = new \Twig\Loader\FilesystemLoader('view');
         $twig = new \Twig\Environment($loader, array(
-            'cache' => false, // __DIR__ . /tmp,
+            'cache' => false, 
+            // __DIR__ . /tmp,
         ));
+        
 
-        $postController = new PostController;
-        $params = [];
+        $postManager = new PostManager();
+        $commentManager = new CommentManager();
+        $userManager = new UserManager();
+        $postController = new PostController($postManager);
+        $commentController = new CommentController($commentManager);
+        $loginController = new LoginController($userManager);
+        $params = ['email' => SessionManager::getInstance()->get('email'), 'username' => SessionManager::getInstance()->get('username')];
 
         switch ($action) {
 
@@ -43,7 +55,6 @@ class Router
                 break;
 
             case 'updatePost':
-
                 if (!empty($_POST['post_id']) && !empty($_POST['title']) && !empty($_POST['chapo']) && !empty($_POST['content'])) {
                     $postController->editPost($_POST['post_id'], $_POST['title'], $_POST['chapo'], $_POST['content']);
                 } else {
@@ -72,12 +83,12 @@ class Router
                 break;
 
             case 'showComment':
-                [$twigTemplate, $params] = $postController->showComment($_GET['comment_id']);
+                [$twigTemplate, $params] = $commentController->showComment($_GET['comment_id']);
                 break;
 
             case 'updateComment':
-                if (!empty($_POST['comment_id']) && !empty($_POST['comment']) && !empty($_POST['is_valid']) && !empty($_POST['posts_post_id']) && !empty($_POST['user_user_id'])) {
-                    $postController->editComment($_POST['comment_id'], $_POST['comment'], $_POST['is_valid'], $_POST['posts_post_id'], $_POST['user_user_id']);
+                if (!empty($_POST['comment_id']) && !empty($_POST['comment'])  && !empty($_POST['is_valid']) && !empty($_POST['posts_post_id']) && !empty($_POST['users_user_id'])) {
+                    $commentController->editComment($_POST['comment_id'], $_POST['comment'], $_POST['is_valid'], $_POST['posts_post_id'], $_POST['users_user_id']);
                 } else {
                     throw new Exception('Tous les champs doivent être remplis');
                 }
@@ -89,18 +100,14 @@ class Router
 
             case 'addComment':
                 if (!empty($_POST['comment'])) {
-                    $postController->addComment($_POST['comment'], $_GET['post_id']);
+                    $commentController->addComment($_POST['comment'], $_POST['posts_post_id'], $_POST['users_user_id']);
                 } else {
                     throw new Exception('Tous les champs ne sont pas remplis !');
                 }
                 break;
 
-            case 'addFormComment':
-                $twigTemplate = 'frontend/addFormComment.html.twig';
-                break;
-
             case 'deleteComment':
-                [$twigTemplate, $params] = $postController->deleteComment($_GET['comment_id']);
+                [$twigTemplate, $params] = $commentController->deleteComment($_GET['comment_id']);
                 break;
 
             case 'contact':
@@ -111,9 +118,31 @@ class Router
                 $twigTemplate = 'frontend/login.html.twig';
                 break;
 
-            case 'register':
-                $twigTemplate = 'frontend/register.html.twig';
+            case 'verifLogin':
+                if ( !empty($_POST['email']) && !empty($_POST['password'])) {
+                    
+                    $loginController->connect($_POST['email'], $_POST['password']);
+                } else {
+                    throw new Exception('Tous les champs ne sont pas remplis !');
+                }
                 break;
+
+            case 'addFormUser':
+                $twigTemplate = 'frontend/addFormUser.html.twig';
+                break;
+
+            case 'addUser':
+                if (!empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password'])) {
+                    $postController->addUser($_POST['username'], $_POST['email'], $_POST['password']);
+                } else {
+                    throw new Exception('Tous les champs ne sont pas remplis !');
+                }
+                break;
+
+            case 'logout':
+                if (isset($_SESSION)) {
+                    $loginController->logout();
+                }
 
             default:
                 header('HTTP/1.0 404 Not Found');

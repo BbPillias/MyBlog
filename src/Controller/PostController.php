@@ -5,23 +5,29 @@ namespace Berengere\Blog\Controller;
 use Exception;
 use \Berengere\Blog\Manager\PostManager;
 use \Berengere\Blog\Manager\CommentManager;
+use \Berengere\Blog\Manager\UserManager;
 
 class PostController
 {
+    private PostManager $postManager;
+
+    public function __construct(PostManager $postManager)
+    {
+        $this->postManager = $postManager;
+    }
+
     public function listPosts()
     {
-        $postManager = new PostManager();
-        $listPosts = $postManager->getPosts();
+        $listPosts = $this->postManager->getPosts();
 
         return ['frontend/listPosts.html.twig', compact('listPosts')];
     }
 
     public function post(int $postId)
     {
-        $postManager = new PostManager();
         $commentManager = new CommentManager();
 
-        $post = $postManager->getPost($postId);
+        $post = $this->postManager->getPost($postId);
         $comments = $commentManager->getComments($postId);
 
         return ['frontend/post.html.twig', compact('post', 'comments')];
@@ -29,9 +35,7 @@ class PostController
 
     public function addPost($title, $chapo, $content)
     {
-        $postManager = new PostManager();
-
-        $newPost = $postManager->post($title, $chapo, $content);
+        $newPost = $this->postManager->post($title, $chapo, $content);
         if ($newPost === false) {
             throw new Exception('Impossible d\'ajouter l\'article !');
         } else {
@@ -41,18 +45,14 @@ class PostController
 
     public function showPost($postId)
     {
-        $postManager = new PostManager();
-
-        $post = $postManager->getPost($postId);
+        $post = $this->postManager->getPost($postId);
 
         return ['backend/updatePost.html.twig', compact('post')];
     }
 
     public function editPost($postId, $title, $chapo, $content)
     {
-        $postManager = new PostManager();
-
-        $modifiedPost = $postManager->updatePost($_GET['post_id'], $title, $chapo, $content);
+        $modifiedPost = $this->postManager->updatePost($postId, $title, $chapo, $content);
 
         if ($modifiedPost === false) {
 
@@ -64,53 +64,22 @@ class PostController
 
     public function delete(int $postId)
     {
-        $postManager = new PostManager();
-
-        $postManager->delete($postId);
+        $this->postManager->delete($postId);
 
         header('Location: index.php?action=listPosts');
     }
 
-    public function addComment($comment, $postId)
-    {
-        $commentManager = new CommentManager();
-        $affectedLines = $commentManager->postComment($comment, $postId);
 
-        if ($affectedLines === false) {
-            throw new Exception('Impossible d\'ajouter le commentaire !');
+    public function addUser($username, $email, $password)
+    {
+        $userManager = new UserManager();
+
+        $newUser = $userManager->user($username, $email, $password);
+        if ($newUser === false) {
+            throw new Exception('Impossible d\'ajouter le nouvel utilisateur !');
         } else {
-            header('Location: index.php?action=post&post_id=' . $postId);
+            header('Location: index.php?action=home');
         }
     }
 
-    public function showComment($commentId)
-    {
-        $commentManager = new CommentManager();
-
-        $comment = $commentManager->getComment($commentId);
-
-        return ['frontend/updateComment.html.twig', compact('comment')];
     }
-
-    public function editComment($commentId, $comment, $valid, $postId, $userId)
-    {
-        $commentManager = new CommentManager();
-
-        $modifiedComment = $commentManager->updateComment($commentId, $comment, $valid, $postId, $userId);
-
-        if ($modifiedComment === false) {
-            throw new Exception('Impossible de modifier le commentaire !');
-        } else {
-            header('Location: index.php?action=post&post&id=' . $postId);
-        }
-    }
-
-    public function deleteComment(int $commentId)
-    {
-        $commentManager = new CommentManager();
-
-        $commentManager->deleteComment($commentId);
-
-        header('Location: index.php?action=listPosts');
-    }
-}

@@ -15,11 +15,20 @@ class UserManager extends Database
      */
     public function user($username, $email, $password)
     {
-        $db = $this->dbConnect();
-        $newUser = $db->prepare('INSERT INTO users ( username, email, password) VALUES ( ?, ?, ?');
-        $affectedLines = $newUser->execute(array($username, $email, $password));
+        $req = $this->dbConnect()
+            ->prepare('INSERT INTO users (username, email, password) VALUES ( ?, ?, ?)');
 
-        return $affectedLines;
+        return $req->execute([$username, $email, $password]);
     }
 
+    public function login($email, $password)
+    {
+        $req = $this->dbConnect()
+            ->prepare('SELECT user_id, email, username FROM users WHERE email = :email AND password = :password');
+
+        $req->execute(compact('email', 'password'));
+       
+        return  $req->fetch();
+        
+    }
 }
