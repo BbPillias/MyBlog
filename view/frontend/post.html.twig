@@ -26,24 +26,31 @@
 						<p>Les commentaires</p>
 						<p>{{comment.comment_date|nl2br}}
 							{{comment.comment|nl2br}}</p>
-						<a class="btn btn-primary text-uppercase" href="index.php?action=deleteComment&comment_id={{comment.comment_id}}">Supprimer</a>
-						<a class="btn btn-primary text-uppercase" href="index.php?action=showComment&amp;posts_post_id={{ comment.posts_post_id }}&amp;comment_id={{ comment.comment_id }}">Modifier</a>
+						{{ session.user_id}}-{{comment.users_user_id}}
+
+						{% if session.user_id == 'admin' %}
+							<a class="btn btn-primary text-uppercase" href="index.php?action=deleteComment&comment_id={{comment.comment_id}}">Supprimer</a>
+
+						{% elseif session.user_id == comment.users_user_id %}
+							<a class="btn btn-primary text-uppercase" href="index.php?action=deleteComment&comment_id={{comment.comment_id}}">Supprimer</a>
+							<a class="btn btn-primary text-uppercase" href="index.php?action=showComment&amp;posts_post_id={{ comment.posts_post_id }}&amp;comment_id={{ comment.comment_id }}">Modifier</a>
+						{% endif %}
 					</div>
 				{% endfor %}
 				<div class="container px-4 px-lg-5">
 					<div class="row gx-4 gx-lg-5 justify-content-center">
 						<div class="col-md-10 col-lg-8 col-xl-7">
 							<div class="my-5">
-						<h3>Ajouter un commentaire</h3>
+								<h3>Ajouter un commentaire</h3>
 								<form id="commentForm" method="POST" action="index.php?action=addComment&post_id={{post.post_id}}">
 									<div class=" form-floating">
 										<input class="form-control" id="titre" type="textarea" name="comment" placeholder="Commentaire" data-sb-validations="required"/>
 										<label for="commentaire">Commentaire</label>
 										<div class="invalid-feedback" data-sb-feedback="name:required">Commentaire</div>
 									</div>
-								
+
 									<input type="hidden" name="posts_post_id" value="{{ post.post_id }}">
-									<input type="hidden" name="users_user_id" value="{{ '1' }}">
+									<input type="hidden" name="users_user_id" value="{{ session.user_id}}">
 									<br/>
 									<input type="submit" name="button" value="Enregistrer"/>
 								</form>

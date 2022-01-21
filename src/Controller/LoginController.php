@@ -27,14 +27,18 @@ class LoginController
 
             $session->set('email', $email);
             $session->set('username', $loginUser['username']);
-
+            $session->set('user_status', $loginUser['user_status']);
+            $session->set('user_id', $loginUser['user_id']);
+            
             header('Location: index.php?action=home');
         }
     }
 
     public function logout()
     {
-        session_destroy();
+        $session = SessionManager::getInstance();
+        $session->destroy();
+
         header('Location: index.php?action=home');
     }
 }

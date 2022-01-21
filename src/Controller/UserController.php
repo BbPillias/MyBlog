@@ -24,7 +24,7 @@ class UserController
     {
         $userManager = new UserManager();
 
-        $loginUser = $userManager->login($email, $password);
+        $loginUser = $userManager->login($userId, $username, $email, $password);
 
         if ($loginUser === false) {
             throw new Exception('nom d\'utilisateur ou mot de passe incorrect !');
@@ -32,6 +32,8 @@ class UserController
 
             $_SESSION['email'] = $email;
             $_SESSION['password'] = $password;
+            $_SESSION['userId'] = $userId;
+            $_SESSION['username'] = $email;
        
 
             header('Location: index.php?action=home');

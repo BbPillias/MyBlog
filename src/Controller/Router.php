@@ -23,10 +23,10 @@ class Router
 
         $loader = new \Twig\Loader\FilesystemLoader('view');
         $twig = new \Twig\Environment($loader, array(
-            'cache' => false, 
+            'cache' => false,
             // __DIR__ . /tmp,
         ));
-        
+
 
         $postManager = new PostManager();
         $commentManager = new CommentManager();
@@ -34,7 +34,8 @@ class Router
         $postController = new PostController($postManager);
         $commentController = new CommentController($commentManager);
         $loginController = new LoginController($userManager);
-        $params = ['email' => SessionManager::getInstance()->get('email'), 'username' => SessionManager::getInstance()->get('username')];
+        $defaultParams = ['session' => SessionManager::getInstance()->getAll()];
+        $params = [];
 
         switch ($action) {
 
@@ -119,8 +120,8 @@ class Router
                 break;
 
             case 'verifLogin':
-                if ( !empty($_POST['email']) && !empty($_POST['password'])) {
-                    
+                if (!empty($_POST['email']) && !empty($_POST['password'])) {
+
                     $loginController->connect($_POST['email'], $_POST['password']);
                 } else {
                     throw new Exception('Tous les champs ne sont pas remplis !');
@@ -140,15 +141,14 @@ class Router
                 break;
 
             case 'logout':
-                if (isset($_SESSION)) {
-                    $loginController->logout();
-                }
+                $loginController->logout();
+                break;
 
             default:
                 header('HTTP/1.0 404 Not Found');
                 break;
         }
 
-        echo $twig->render($twigTemplate, $params);
+        echo $twig->render($twigTemplate, $defaultParams+$params);
     }
 }
