@@ -83,6 +83,14 @@ class Router
                 [$twigTemplate, $params] = $postController->delete($_GET['post_id']);
                 break;
 
+            case 'validComment':
+                if (!empty($_GET['comment_id'])) {
+                    $commentController->validComment($_GET['comment_id']);
+                } else {
+                    throw new Exception('Validation impossible !');
+                }
+                break;
+
             case 'showComment':
                 [$twigTemplate, $params] = $commentController->showComment($_GET['comment_id']);
                 break;
@@ -149,6 +157,6 @@ class Router
                 break;
         }
 
-        echo $twig->render($twigTemplate, $defaultParams+$params);
+        echo $twig->render($twigTemplate, $defaultParams + $params);
     }
 }
