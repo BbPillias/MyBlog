@@ -46,6 +46,22 @@ class CommentManager extends Database
         return $modifiedComment->execute(array($comment, $valid, $commentId));
     }
 
+    public function validComment($commentId)
+    {
+        $req = $this->dbConnect()
+        ->prepare('UPDATE comments SET is_valid = 1  WHERE comment_id = ?');
+         $req->execute(array($commentId));
+
+         $reqPost = $this->dbConnect()
+         ->prepare('SELECT posts_post_id FrOM comments WHERE comment_id = ?');
+          $reqPost->execute(array($commentId));
+          return $reqPost->fetchColumn();
+
+         
+
+
+    }
+
     public function deleteComment($commentId)
     {
         $db = $this->dbConnect();

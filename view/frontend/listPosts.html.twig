@@ -28,6 +28,8 @@
 	{% endfor %}
 	<hr class="my-4"/>
 	<div class="d-flex justify-content-end mb-4">
-		<a class="btn btn-primary text-uppercase" href="index.php?action=addFormPost">Ajouter un article →</a>
+		{% if session.user_status == 'admin' %}
+			<a class="btn btn-primary text-uppercase" href="index.php?action=addFormPost">Ajouter un article →</a>
+		{% endif %}
 	</div>
 {% endblock %}

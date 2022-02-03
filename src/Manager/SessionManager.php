@@ -12,25 +12,23 @@ class SessionManager
 
     private function __construct()
     {
-        
     }
 
     /**
-    *    Returns THE instance of 'Session'.
-    *    The session is automatically initialized if it wasn't.
-    *   
-    *    @return    object
-    **/
-   
+     *    Returns THE instance of 'Session'.
+     *    The session is automatically initialized if it wasn't.
+     *   
+     *    @return    object
+     **/
+
     public static function getInstance()
     {
-        if ( !isset(self::$instance))
-        {
+        if (!isset(self::$instance)) {
             self::$instance = new self;
         }
-       
+
         self::$instance->start();
-       
+
         return self::$instance;
     }
 
@@ -44,14 +42,22 @@ class SessionManager
     public function set(string $name, $value)
     {
         $_SESSION[$name] = $value;
-
     }
 
     public function get(string $name)
     {
-        if ( isset($_SESSION[$name]))
-        {
+        if (isset($_SESSION[$name])) {
             return $_SESSION[$name];
         }
+    }
+
+    public function getAll()
+    {
+        return $_SESSION;
+    }
+
+    public function destroy()
+    {
+        session_destroy();
     }
 }

@@ -4,6 +4,7 @@ namespace Berengere\Blog\Controller;
 
 use Exception;
 use \Berengere\Blog\Manager\CommentManager;
+use \Berengere\Blog\Manager\SessionManager;
 
 class CommentController
 {
@@ -32,7 +33,7 @@ class CommentController
         }
     }
 
-    public function showComment($commentId)
+    public function showComment(int $commentId)
     {
         $comment = $this->commentManager->getComment($commentId);
 
@@ -46,10 +47,22 @@ class CommentController
         if ($modifiedComment === false) {
             throw new Exception('Impossible de modifier le commentaire !');
         } else {
-            header('Location: index.php?action=post&post&id=' . $postId);
+            header('Location: index.php?action=post&post_id=' . $postId);
         }
     }
 
+    public function validComment($commentId)
+    {
+        $session = SessionManager::getInstance();
+
+        if (!$session->get('user_status') == 'admin') {
+            header('HTTP/1.0 401 Unauthorized');
+        }
+        $postId = $this->commentManager->validComment($commentId);
+
+        header('Location: index.php?action=post&post_id=' . $postId);
+    }
+   
     public function deleteComment(int $commentId)
     {
         $this->commentManager->deleteComment($commentId);

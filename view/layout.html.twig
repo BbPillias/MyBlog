@@ -43,8 +43,10 @@
 					</ul>
 					<div class="collapse navbar-collapse" id="navbarResponsive">
 						<ul class="navbar-nav ms-auto py-4 py-lg-0">
-							{% if email %}
-								<a class="dropdown-item nav-logout" href="index.php?action=logout">Déconnexion</a>
+							{% if session.email %}
+								<li class="nav-item">
+									<a class="nav-link px-lg-3 py-3 py-lg-4" href="index.php?action=logout">Déconnexion</a>
+								</li>
 							{% else %}
 								<li class="nav-item">
 									<a class="nav-link px-lg-3 py-3 py-lg-4" href="index.php?action=login">Se connecter</a>
@@ -62,12 +64,16 @@
 			<header class="masthead" style="background-image: url('public/assets/img/home-bg.jpg')">
 				<div class="container position-relative px-4 px-lg-5">
 					<div class="row gx-4 gx-lg-5 justify-content-center">
-
-						{% if username %}
-							<p>Bienvenue administrateur
-								{{ username}}
-							</p>
-						
+						{% if session.username %}
+							{% if session.user_status == 'admin'  %}
+								<p>Bienvenue administrateur
+									{{ session.username }}
+								</p>
+							{% elseif session.user_status == 'user' %}
+								<p>Bienvenue sur mon blog
+									{{ session.username }}
+								</p>
+							{% endif %}
 						{% endif %}
 						<div class="col-md-10 col-lg-8 col-xl-7">
 							<div class="site-heading"> {% block title %}{% endblock %}
