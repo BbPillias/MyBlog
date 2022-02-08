@@ -16,6 +16,7 @@
     "require": {
         "twig/twig": "^3.3",
         "phpunit/phpunit": "^9.5",
-        "altorouter/altorouter": "^2.0"
+        "symfony/mailer": "^5.4",
+        "symfony/google-mailer": "^5.4"
     }
 }

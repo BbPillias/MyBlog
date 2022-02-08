@@ -4,6 +4,7 @@ namespace Berengere\Blog\Controller;
 
 use Berengere\Blog\Controller\PostController;
 use Berengere\Blog\Controller\CommentController;
+use Berengere\Blog\Controller\MailerController;
 use Berengere\Blog\Manager\PostManager;
 use Berengere\Blog\Manager\CommentManager;
 use Berengere\Blog\Manager\UserManager;
@@ -119,9 +120,19 @@ class Router
                 [$twigTemplate, $params] = $commentController->deleteComment($_GET['comment_id']);
                 break;
 
-            case 'contact':
-                $twigTemplate = 'frontend/contact.html.twig';
-                break;
+                // case 'contact':
+                //     $twigTemplate = 'frontend/contact.html.twig';
+                //     break;
+
+                // case 'contactForm':
+                //     if (isset ($_POST['valider'])){
+                //     if (!empty($_POST['nom']) && !empty($_POST['email']) && !empty($_POST['message'])) {
+                //         $mailerController->sendContactMail($_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['message']);
+                //     } else {
+                //         throw new Exception('Tous les champs ne sont pas remplis !');
+                //     }
+                // }
+                //     break;
 
             case 'login':
                 $twigTemplate = 'frontend/login.html.twig';
