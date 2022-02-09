@@ -9,8 +9,21 @@ class MailManager
 {
     public function confirmationMail()
     {
+       
         $transport = new GmailTransport('blog.berengere@gmail.com', 'MonBlog2022');
         $mailer = new Mailer($transport);
         $mailer->send($email);
+
+    }
+
+    public function newEmail($nom, $email, $message)
+    {
+        $nom;
+        $email;
+        $message;
+        return (array($nom, $email, $message));
+
     }
 }
+
+
