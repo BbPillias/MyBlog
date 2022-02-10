@@ -5,8 +5,8 @@ namespace Berengere\Blog\Controller;
 use Exception;
 use Berengere\Blog\Manager\MailManager;
 
-class ContactController {
-
+class ContactController
+{
     private MailManager $mailManager;
 
     public function __construct(MailManager $mailManager)
@@ -14,15 +14,18 @@ class ContactController {
         $this->mailManager = $mailManager;
     }
 
-    public function confirmationMail($name, $mail, $message)
+    public function confirmationMail($name, $email, $message)
     {
-        $email = $this->mailManager->newEmail($name, $mail, $message);
+        $newEmail = $this->mailManager->sendEmail($name, $email, $message);
 
-        if ($email === false) {
+        if ($newEmail === false) {
             throw new Exception('Impossible d\'envoyer le message');
         } else {
+            $name->set('name', $name);
+            $email->set('email', $email);
+            $message->set('message', $message);
+
             header('Location: index.php?action=home');
         }
     }
-
 }

@@ -2,28 +2,35 @@
 
 namespace Berengere\Blog\Manager;
 
-use Symfony\Component\Mailer\Bridge\Google\Smtp\GmailTransport;
+use Symfony\Component\Mime\Email;
+// use Symfony\Component\Mailer\Bridge\Google\Smtp\GmailTransport;
 use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
 
 class MailManager
 {
     public function confirmationMail()
     {
-       
-        $transport = new GmailTransport('blog.berengere@gmail.com', 'MonBlog2022');
+        // $transport = new GmailTransport('blog.berengere@gmail.com', 'MonBlog2022');
+        $transport = new EsmtpTransport('localhost');
         $mailer = new Mailer($transport);
-        $mailer->send($email);
 
+        $email = (new Email())
+            ->from('hello@example.com')
+            ->to('you@example.com')
+            //->cc('cc@example.com')
+            //->bcc('bcc@example.com')
+            //->replyTo('fabien@example.com')
+            //->priority(Email::PRIORITY_HIGH)
+            ->subject('Time for Symfony Mailer!')
+            ->text('Sending emails is fun again!')
+            ->html('<p>See Twig integration for better HTML integration!</p>');
+
+        $mailer->send($email);
     }
 
-    public function newEmail($nom, $email, $message)
+    public function sendEmail($nom, $email, $message)
     {
-        $nom;
-        $email;
-        $message;
         return (array($nom, $email, $message));
-
     }
 }
-
-

@@ -129,8 +129,8 @@ class Router
 
             case 'contactForm':
                 
-                    if (!empty($_POST['nom']) && !empty($_POST['email']) && !empty($_POST['message'])) {
-                        $mailController->confirmationMail($_POST['nom'],$_POST['email'], $_POST['message']);
+                    if (!empty($_POST['name']) && !empty($_POST['email']) && !empty($_POST['message'])) {
+                        $mailController->confirmationMail($_POST['name'], $_POST['email'], $_POST['message']);
                     } else {
                         throw new Exception('Tous les champs ne sont pas remplis !');
                     }

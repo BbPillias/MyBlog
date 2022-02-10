@@ -19,7 +19,6 @@ class LoginController
     {
         $loginUser = $this->userManager->login($email, $password);
        
-
         if ($loginUser === false) {
             throw new Exception('email ou mot de passe incorrect !');
         } else {
