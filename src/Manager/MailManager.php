@@ -3,48 +3,31 @@
 namespace Berengere\Blog\Manager;
 
 use Symfony\Component\Mailer\Transport;
-use Symfony\Component\Mailer\Bridge\Google\Smtp\GmailTransport;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mime\Email;
-use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
+use Symfony\Component\Mailer\Bridge\Google\Transport\GmailSmtpTransport;
 
 class MailManager
 {
-    private static $mail;
 
-    public static function getMail()
+    public function sendEmail($name, $userMail, $message)
     {
-        if (!isset(self::$mail)) {
-            self::$mail = new self;
-        }
-        return self::$mail;
-    }
 
-    public function set(string $name, $value)
-    {
-        $_POST[$name] = $value;
-    }
+        $transport = new GmailSmtpTransport('blog.berengere@gmail.com', 'MonBlog2022');
 
-    public function sendEmail($nom, $email, $message)
-    {
-        $dsn = ('blog.berengere@gmail.com')('MonBlog2022');
-        $transport = Transport::fromDsn($dsn);
-        // $transport = new GmailTransport('blog.berengere@gmail.com', 'MonBlog2022');
-        // $transport = new EsmtpTransport('localhost');
         $mailer = new Mailer($transport);
 
         $email = (new Email())
-            ->from()
-            ->to('blog.berengere@gmail.com');
+            ->from('blog.berengere@gmail.com')
+            ->to('blog.berengere@gmail.com')
             //->cc('cc@example.com')
             //->bcc('bcc@example.com')
             //->replyTo('fabien@example.com')
             //->priority(Email::PRIORITY_HIGH)
-            // ->subject('Time for Symfony Mailer!')
-            // ->text('Sending emails is fun again!')
-            // ->html('<p>See Twig integration for better HTML integration!</p>');
+            ->subject('Time for Symfony Mailer!')
+            ->text('Sending emails is fun again!');
+        // ->html('view/frontend/contat.html.twig');
 
-            $mailer->send($email);
+        $mailer->send($email);
     }
-
 }

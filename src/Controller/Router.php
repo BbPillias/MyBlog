@@ -131,7 +131,7 @@ class Router
                 
                     if (!empty($_POST['name']) && !empty($_POST['email']) && !empty($_POST['message'])) {
                         $mailController->confirmationMail($_POST['name'], $_POST['email'], $_POST['message']);
-                        var_dump($mailController);
+                        
                     } else {
                         throw new Exception('Tous les champs ne sont pas remplis !');
                     }

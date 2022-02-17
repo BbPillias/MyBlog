@@ -21,12 +21,6 @@ class ContactController
         if ($newEmail === false) {
             throw new Exception('Impossible d\'envoyer le message');
         } else {
-            $mail = MailManager::getMail();
-
-            $mail->set('name', $name);
-            $mail->set('email', $email);
-            $mail->set('message', $message);
-
             header('Location: index.php?action=home');
         }
     }
