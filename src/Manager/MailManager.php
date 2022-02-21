@@ -2,53 +2,31 @@
 
 namespace Berengere\Blog\Manager;
 
-use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\Bridge\Google\Transport\GmailSmtpTransport;
 
 class MailManager
 {
+    private Mailer $mailer;
 
-    public function sendEmail($name, $userMail, $message)
+    public function __construct(string $username,string $password)
     {
+        $transport = new GmailSmtpTransport($username, $password);
+        $this->mailer = new Mailer($transport);
+    }
 
-        $transport = new GmailSmtpTransport('blog.berengere@gmail.com', 'MonBlog2022');
-
-        $mailer = new Mailer($transport);
+    public function sendEmail(string $name, string $userMail,string $message)
+    {
 
         $email = (new Email())
             ->from('blog.berengere@gmail.com')
-            ->to($userMail)
-            //->cc('cc@example.com')
-            //->bcc('bcc@example.com')
-            //->replyTo('fabien@example.com')
-            //->priority(Email::PRIORITY_HIGH)
-            ->subject('Reception de votre message')
-            ->text('Votre message a bien été receptionné par ma boite mail! Je vous répond au plus vite.');
-        // ->html('view/frontend/contat.html.twig');
-
-        $mailer->send($email);
+            ->to('blog.berengere@gmail.com')
+            ->subject(sprintf('Nouveau message de la part de %s %s ', $name, $userMail))
+            ->replyTo($userMail)
+            ->text($message);
+ 
+            $this->mailer->send($email);
     }
 
-    public function userEmail($name, $userEmail, $message)
-    {
-
-        $transport = new GmailSmtpTransport('blog.berengere@gmail.com', 'MonBlog2022');
-
-        $mailer = new Mailer($transport);
-
-        $email = (new Email())
-            ->from('blog.berengere@gmail.com')
-            ->to($userEmail)
-            //->cc('cc@example.com')
-            //->bcc('bcc@example.com')
-            //->replyTo('fabien@example.com')
-            //->priority(Email::PRIORITY_HIGH)
-            ->subject('Reception de votre message')
-            ->text('Votre message a bien été receptionné par ma boite mail! Je vous répond au plus vite.');
-        // ->html('view/frontend/contat.html.twig');
-
-        $mailer->send($email);
     }
-}

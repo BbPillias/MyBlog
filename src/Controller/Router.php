@@ -33,7 +33,7 @@ class Router
         $postManager = new PostManager();
         $commentManager = new CommentManager();
         $userManager = new UserManager();
-        $mailManager = new MailManager();
+        $mailManager = new MailManager('blog.berengere@gmail.com', 'MonBlog2022');
         $userController = new UserController();
         $postController = new PostController($postManager);
         $commentController = new CommentController($commentManager);
