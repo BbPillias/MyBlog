@@ -3,9 +3,17 @@
 namespace Berengere\Blog\Manager;
 
 use Berengere\Blog\Core\Database;
+use Berengere\Blog\Model\Comment;
 
 class CommentManager extends Database
 {
+/**
+     * Return Comments from a post
+     *
+     * @param $postId
+     * @return array|mixed
+     */
+    
     public function getComments($postId)
     {
         $req = $this->dbConnect()
