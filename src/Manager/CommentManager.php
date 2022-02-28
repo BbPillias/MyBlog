@@ -8,8 +8,8 @@ class CommentManager extends Database
 {
     public function getComments($postId)
     {
-        $db = $this->dbConnect();
-        $req = $db->prepare('SELECT * FROM comments WHERE posts_post_id = ? ORDER BY comment_date DESC');
+        $req = $this->dbConnect()
+            ->prepare('SELECT * FROM comments WHERE posts_post_id = ? ORDER BY comment_date DESC');
         $req->execute(array($postId));
 
         return $req->fetchAll();
@@ -32,8 +32,8 @@ class CommentManager extends Database
 
     public function getComment($commentId)
     {
-        $db = $this->dbConnect();
-        $req = $db->prepare('SELECT comment_id, comment, is_valid, posts_post_id, users_user_id, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE comment_id = ?');
+        $req = $this->dbConnect()
+            ->prepare('SELECT comment_id, comment, is_valid, posts_post_id, users_user_id, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE comment_id = ?');
         $req->execute(array($commentId));
 
         return  $req->fetch();
@@ -49,23 +49,19 @@ class CommentManager extends Database
     public function validComment($commentId)
     {
         $req = $this->dbConnect()
-        ->prepare('UPDATE comments SET is_valid = 1  WHERE comment_id = ?');
-         $req->execute(array($commentId));
+            ->prepare('UPDATE comments SET is_valid = 1  WHERE comment_id = ?');
+        $req->execute(array($commentId));
 
-         $reqPost = $this->dbConnect()
-         ->prepare('SELECT posts_post_id FrOM comments WHERE comment_id = ?');
-          $reqPost->execute(array($commentId));
-          return $reqPost->fetchColumn();
-
-         
-
-
+        $reqPost = $this->dbConnect()
+            ->prepare('SELECT posts_post_id FrOM comments WHERE comment_id = ?');
+        $reqPost->execute(array($commentId));
+        return $reqPost->fetchColumn();
     }
 
     public function deleteComment($commentId)
     {
-        $db = $this->dbConnect();
-        $req = $db->prepare('DELETE FROM comments WHERE comment_id =?');
+        $req = $this->dbConnect()
+            ->prepare('DELETE FROM comments WHERE comment_id =?');
 
         return $req->execute([$commentId]);
     }
