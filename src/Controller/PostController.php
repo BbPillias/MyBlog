@@ -5,17 +5,21 @@ namespace Berengere\Blog\Controller;
 use Exception;
 use \Berengere\Blog\Manager\PostManager;
 use \Berengere\Blog\Manager\CommentManager;
-use \Berengere\Blog\Manager\UserManager;
+
 
 class PostController
 {
-    private PostManager $postManager;
+    private $postManager;
 
-    public function __construct(PostManager $postManager)
+    public function __construct()
     {
-        $this->postManager = $postManager;
+        $this->postManager = new PostManager();
     }
 
+
+    /**
+     * Posts view from the post manager
+     */
     public function listPosts()
     {
         $listPosts = $this->postManager->getPosts();
@@ -23,7 +27,12 @@ class PostController
         return ['frontend/listPosts.html.twig', compact('listPosts')];
     }
 
-    public function post(int $postId)
+    /**
+     * Post view from the post manager
+     *
+     * @param $postId
+     */
+    public function post($postId)
     {
         $commentManager = new CommentManager();
 
@@ -68,5 +77,4 @@ class PostController
 
         header('Location: index.php?action=listPosts');
     }
-
-    }
+}

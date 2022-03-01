@@ -16,11 +16,17 @@ class CommentManager extends Database
     
     public function getComments($postId)
     {
-        $req = $this->dbConnect()
-            ->prepare('SELECT * FROM comments WHERE posts_post_id = ? ORDER BY comment_date DESC');
-        $req->execute(array($postId));
+        $req = 'SELECT * FROM comments WHERE posts_post_id = :post_id ORDER BY comment_date DESC';
+        $parameters= [':postId' => $postId];
 
-        return $req->fetchAll();
+        $result = $this->sql($req, $parameters);
+        $custom_array = [];
+
+        while ($datas = $result->fetch(\PDO::FETCH_ASSOC)) {
+            array_push($custom_array, New Comment($datas));
+        }
+
+        return $custom_array;
     }
 
     /**

@@ -3,20 +3,28 @@
 namespace Berengere\Blog\Manager;
 
 use Berengere\Blog\Core\Database;
+use Berengere\Blog\Model\Post;
 
+/**
+ * PostManager Queries for Posts
+ */
 class PostManager extends Database
 {
     /**
      * Return All Posts
      *
-     * @return array
      */
     public function getPosts()
     {
-        $req = $this->dbConnect()
-            ->query('SELECT * FROM posts');
+        $posts = 'SELECT * FROM posts';
+        $result = $this->sql($posts);
+        $custom_array = [];
 
-        return $req->fetchAll();
+        while ($datas = $result->fetch(\PDO::FETCH_ASSOC)){
+            array_push($custom_array, new Post($datas));
+        }
+
+        return $custom_array;
     }
 
     /**
@@ -27,11 +35,13 @@ class PostManager extends Database
      */
     public function getPost($postId)
     {
-        $req = $this->dbConnect()
-            ->prepare('SELECT post_id, title, chapo, content, DATE_FORMAT(date_creation, \'%d/%m/%Y à %Hh%imin%ss\') AS created_at_fr FROM posts WHERE post_id = ?');
-        $req->execute([$postId]);
+        $post = 'SELECT post_id, title, chapo, content, DATE_FORMAT(date_creation, \'%d/%m/%Y à %Hh%imin%ss\') AS created_at_fr FROM posts WHERE post_id = :postId';
+        $parameters = [':postId' => $postId];
+        $result = $this->sql($post, $parameters);
+        $datas = $result->fetch(\PDO::FETCH_ASSOC);
 
-        return $req->fetch();
+        return new Post($datas);
+        var_dump($datas);
     }
 
     /**
@@ -40,27 +50,49 @@ class PostManager extends Database
      * @param $post
      * @return bool|false|\PDOStatement
      */
-    public function post($title, $chapo, $content)
+    public function post($post)
     {
-        $newPost = $this->dbConnect()
-            ->prepare('INSERT INTO posts (title, chapo, content, date_creation, date_update) VALUES ( ?, ?, ?, NOW(),NOW())');
+        $newPost = 'INSERT INTO posts (title, chapo, content, date_creation, date_update) VALUES ( :title, :chapo, :content, NOW(),NOW())';
+        $parameters = [
+            ':title' => $post['title'],
+            ':chapo' => $post['chapo'],
+            ':content' => $post['content'],
+        ];
 
-        return $newPost->execute(array($title, $chapo, $content));
+        $this->sql($newPost, $parameters);
     }
 
-    public function updatePost($postId, $title, $chapo, $content)
+    /**
+     * Update a Post
+     *
+     * @param $postId
+     * @return bool|false|\PDOStatement
+     */
+    public function updatePost($postId, $datas)
     {
-        $modifiedPost = $this->dbConnect()
-            ->prepare('UPDATE posts SET  title = ?, chapo = ?, content = ?, date_update = NOW() WHERE post_id = ?');
+        $modifiedPost = 'UPDATE posts SET  title = :title, chapo = :chapo, content = :content, date_update = NOW() WHERE post_id = :post_id';
+        $parameters = [
+            ':post_id' => $postId,
+            ':title' => $datas['title'],
+            ':chapo' => $datas['chapo'],
+            ':content' => $datas['content'],
 
-        return $modifiedPost->execute(array($title, $chapo, $content, $postId));
+        ];
+
+        $this->sql($modifiedPost, $parameters);
     }
 
+    /**
+     * Delete a Post
+     *
+     * @param $postId
+     * @return bool|false|\PDOStatement
+     */
     public function delete($postId)
     {
-        $req = $this->dbConnect()
-            ->prepare('DELETE FROM posts WHERE post_id =?');
+        $post = 'DELETE FROM posts WHERE post_id = :post_id';
+        $parameters = [':post_id' => $postId];
 
-        return $req->execute([$postId]);
+        $this->sql($post, $parameters);
     }
 }

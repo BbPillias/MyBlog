@@ -27,4 +27,26 @@ class Database
         }
         return $this->database;
     }
+
+    /**
+     * @param $sql
+     * @param null $parameters
+     * @param null $binds
+     * @return bool|false|\PDOStatement
+     */
+    protected function sql($sql, $parameters = null)
+    {
+
+        if ($parameters) {
+            $result = $this->dbConnect()->prepare($sql);
+
+                $result->execute($parameters);
+
+            return $result;
+        } else {
+            $result = $this->dbConnect()->query($sql);
+
+            return $result;
+        }
+    }
 }
