@@ -10,13 +10,13 @@
 {% block content %}
 
 	<main class="mb-4">
-		<a class="btn text-uppercase" href="index.php?action=post&amp;post_id={{ post.post_id }}">Retour article</a>
+		<a class="btn text-uppercase" href="index.php?action=post&amp;post_id={{ post.postId }}">Retour article</a>
 		<div class="container px-4 px-lg-5">
 			<div class="row gx-4 gx-lg-5 justify-content-center">
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<div class="my-5">
-						<form id="contactForm" method="POST" action="index.php?action=updatePost&amp;post_id={{ post.post_id }}">
-							<input type="hidden" name="post_id" value="{{ post.post_id }}">
+						<form id="contactForm" method="POST" action="index.php?action=updatePost&amp;post_id={{ post.postId }}">
+							<input type="hidden" name="post_id" value="{{ post.postId }}">
 							<div class="form-floating">
 								<input class="form-control" id="title" type="text" name="title" value="{{post.title}}" placeholder="Titre de l'article" data-sb-validations="required"/>
 								<label for="title">Titre</label>
@@ -32,8 +32,8 @@
 								<label for="content">Article</label>
 								<div class="invalid-feedback" data-sb-feedback="content:required">{{post.content|nl2br}}</div>
 							</div>
-							<input type="hidden" name="date_creation" value="{{ post.date_creation }}">
-							<input type="hidden" name="date_update" value="{{ post.date_update }}">
+							<input type="hidden" name="date_creation" value="{{ post.dateCreation }}">
+							<input type="hidden" name="date_update" value="{{ post.dateUpdate }}">
 
 							<br/>
 							<input type="submit" name="button" value="Enregistrer"/>

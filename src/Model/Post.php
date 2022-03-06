@@ -48,6 +48,7 @@ class Post
         $this->content = $datas ['content'];
         $this->dateCreation = $datas ['date_creation'];
         $this->dateUpdate = $datas ['date_update'];
+        $this->userId = $datas ['users_user_id'];
     }
 
 

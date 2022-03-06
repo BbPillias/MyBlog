@@ -49,13 +49,13 @@ class PostManager extends Database
      * @param $post
      * @return bool|false|\PDOStatement
      */
-    public function post($post)
+    public function post($title, $chapo, $content)
     {
         $newPost = 'INSERT INTO posts (title, chapo, content, date_creation, date_update) VALUES ( :title, :chapo, :content, NOW(),NOW())';
         $parameters = [
-            ':title' => $post['title'],
-            ':chapo' => $post['chapo'],
-            ':content' => $post['content'],
+            ':title' => $title,
+            ':chapo' => $chapo,
+            ':content' => $content,
         ];
 
         $this->sql($newPost, $parameters);
@@ -67,14 +67,14 @@ class PostManager extends Database
      * @param $postId
      * @return bool|false|\PDOStatement
      */
-    public function updatePost($postId, $datas)
+    public function updatePost($postId, $title, $chapo, $content)
     {
         $modifiedPost = 'UPDATE posts SET  title = :title, chapo = :chapo, content = :content, date_update = NOW() WHERE post_id = :post_id';
         $parameters = [
             ':post_id' => $postId,
-            ':title' => $datas['title'],
-            ':chapo' => $datas['chapo'],
-            ':content' => $datas['content'],
+            ':title' => $title,
+            ':chapo' => $chapo,
+            ':content' => $content,
 
         ];
 

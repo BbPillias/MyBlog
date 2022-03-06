@@ -3,6 +3,7 @@
 namespace Berengere\Blog\Manager;
 
 use Berengere\Blog\Core\Database;
+use Berengere\Blog\Model\User;
 
 class UserManager extends Database
 {

@@ -7,23 +7,23 @@ use Berengere\Blog\Model\Comment;
 
 class CommentManager extends Database
 {
-/**
+    /**
      * Return Comments from a post
      *
      * @param $postId
      * @return array|mixed
      */
-    
+
     public function getComments($postId)
     {
         $req = 'SELECT * FROM comments WHERE posts_post_id = :postId ORDER BY comment_date DESC';
-        $parameters= [':postId' => $postId];
+        $parameters = [':postId' => $postId];
 
         $result = $this->sql($req, $parameters);
         $custom_array = [];
 
         while ($datas = $result->fetch(\PDO::FETCH_ASSOC)) {
-            array_push($custom_array, New Comment($datas));
+            array_push($custom_array, new Comment($datas));
         }
 
         return $custom_array;
@@ -37,46 +37,58 @@ class CommentManager extends Database
      */
     public function addComment($comment, $postId, $userId)
     {
-        $req = $this->dbConnect()
-            ->prepare('INSERT INTO comments (comment, comment_date, posts_post_id, users_user_id) VALUES(?, NOW(), ?, ? )');
+        $newComment = 'INSERT INTO comments (comment, comment_date, posts_post_id, users_user_id) VALUES(:comment, NOW(), :postId, :userId )';
+        $parameters = [
+            ':comment' => $comment,
+            ':postId' => $postId,
+            ':userId' => $userId,
+        ];
 
-        return $req->execute(array($comment, $postId, $userId));
+        $this->sql($newComment, $parameters);
     }
 
 
     public function getComment($commentId)
     {
-        $req = $this->dbConnect()
-            ->prepare('SELECT comment_id, comment, is_valid, posts_post_id, users_user_id, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE comment_id = ?');
-        $req->execute(array($commentId));
+        $comment = 'SELECT comment_id, comment, is_valid, posts_post_id, users_user_id, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE comment_id = :commentId';
+        $parameters = [':commentId' => $commentId];
+        $result = $this->sql($comment, $parameters);
+        $datas = $result->fetch(\PDO::FETCH_ASSOC);
 
-        return  $req->fetch();
+        return new Comment($datas);
     }
 
-    public function updateComment($commentId, $comment, $valid)
+    public function updateComment($commentId, $comment, $isValid)
     {
-        $modifiedComment = $this->dbConnect()
-            ->prepare('UPDATE comments SET comment = ?, comment_date = NOW(), is_valid = ? WHERE comment_id = ?');
-        return $modifiedComment->execute(array($comment, $valid, $commentId));
+        $modifiedComment = 'UPDATE comments SET comment = :comment, comment_date = NOW(), is_valid = :isValid WHERE comment_id = :commentId';
+        $parameters = [
+            ':comment_id' => $commentId,
+            ':comment' => $comment,
+            ':is_valid' => $isValid,
+        ];
+
+        $this->sql($modifiedComment, $parameters);
     }
 
     public function validComment($commentId)
     {
-        $req = $this->dbConnect()
-            ->prepare('UPDATE comments SET is_valid = 1  WHERE comment_id = ?');
-        $req->execute(array($commentId));
+        $comment = 'UPDATE comments SET is_valid = 1  WHERE comment_id = :commentId';
+        $parameters = [':commentId' => $commentId];
+        $this->sql($comment, $parameters);
 
-        $reqPost = $this->dbConnect()
-            ->prepare('SELECT posts_post_id FrOM comments WHERE comment_id = ?');
-        $reqPost->execute(array($commentId));
-        return $reqPost->fetchColumn();
+        $post = 'SELECT posts_post_id FrOM comments WHERE comment_id = :commentId';
+        $parameters = [':commentId' => $commentId];
+        $result = $this->sql($comment, $parameters);
+        $datas = $result->fetchColumn(\PDO::FETCH_ASSOC);
+
+        return new Comment($datas);
     }
 
     public function deleteComment($commentId)
     {
-        $req = $this->dbConnect()
-            ->prepare('DELETE FROM comments WHERE comment_id =?');
+        $comment = 'DELETE FROM comments WHERE comment_id = :commentId';
+        $parameters = [':commentId' => $commentId];
 
-        return $req->execute([$commentId]);
+        $this->sql($comment, $parameters);
     }
 }
