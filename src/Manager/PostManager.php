@@ -20,7 +20,7 @@ class PostManager extends Database
         $result = $this->sql($posts);
         $custom_array = [];
 
-        while ($datas = $result->fetch(\PDO::FETCH_ASSOC)){
+        while ($datas = $result->fetch(\PDO::FETCH_ASSOC)) {
             array_push($custom_array, new Post($datas));
         }
 
@@ -41,7 +41,6 @@ class PostManager extends Database
         $datas = $result->fetch(\PDO::FETCH_ASSOC);
 
         return new Post($datas);
-        var_dump($datas);
     }
 
     /**

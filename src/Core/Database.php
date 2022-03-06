@@ -17,13 +17,8 @@ class Database
     protected function dbConnect()
     {
         if ($this->database === null) {
-            $db = require __DIR__ . './../Config/config.database.php';
-            return new PDO(
-                'mysql:host=' . $db['db_host'] . ';dbname=' . $db['db_name'] . ';charset=utf8',
-                $db['db_user'],
-                $db['db_password'],
-                array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
-            );
+        $db = new \PDO('mysql:host=localhost;dbname=myblog;charset=utf8', 'root', 'root');
+        return $db;
         }
         return $this->database;
     }
@@ -45,8 +40,8 @@ class Database
             return $result;
         } else {
             $result = $this->dbConnect()->query($sql);
-
             return $result;
         }
+        
     }
 }

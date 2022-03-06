@@ -16,7 +16,7 @@ class CommentManager extends Database
     
     public function getComments($postId)
     {
-        $req = 'SELECT * FROM comments WHERE posts_post_id = :post_id ORDER BY comment_date DESC';
+        $req = 'SELECT * FROM comments WHERE posts_post_id = :postId ORDER BY comment_date DESC';
         $parameters= [':postId' => $postId];
 
         $result = $this->sql($req, $parameters);

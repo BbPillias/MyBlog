@@ -44,9 +44,11 @@ class Post
     {
         $this->postId =(int) $datas ['post_id'];
         $this->title = $datas ['title'];
-        
+        $this->chapo = $datas ['chapo'];
+        $this->content = $datas ['content'];
+        $this->dateCreation = $datas ['date_creation'];
+        $this->dateUpdate = $datas ['date_update'];
     }
-
 
 
     /**
