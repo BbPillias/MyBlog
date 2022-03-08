@@ -15,10 +15,13 @@ class LoginController
         $this->userManager = $userManager;
     }
 
+    /**
+     * Connect using user manager session manager
+     */
     public function connect($email, $password)
     {
         $loginUser = $this->userManager->login($email, $password);
-       
+
         if ($loginUser === false) {
             throw new Exception('email ou mot de passe incorrect !');
         } else {
@@ -28,11 +31,14 @@ class LoginController
             $session->set('username', $loginUser['username']);
             $session->set('user_status', $loginUser['user_status']);
             $session->set('user_id', $loginUser['user_id']);
-            
+
             header('Location: index.php?action=home');
         }
     }
 
+    /**
+     * logout using session manager
+     */
     public function logout()
     {
         $session = SessionManager::getInstance();

@@ -46,9 +46,9 @@ class Post
         $this->title = $datas ['title'];
         $this->chapo = $datas ['chapo'];
         $this->content = $datas ['content'];
-        $this->dateCreation = $datas ['date_creation'];
-        $this->dateUpdate = $datas ['date_update'];
-        $this->userId = $datas ['users_user_id'];
+        // $this->dateCreation = $datas ['date_creation'];
+        // $this->dateUpdate = $datas ['date_update'];
+        // $this->userId = $datas ['users_user_id'];
     }
 
 

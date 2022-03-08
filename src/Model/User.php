@@ -15,7 +15,7 @@ class User
     private $username;
 
     /**
-     * @var string $mail user eemail
+     * @var string $mail user email
      */
     private $email;
 
@@ -27,7 +27,7 @@ class User
     /**
      * @var string $user_status user status
      */
-    private $status;
+    private $userStatus;
 
     public function __construct($datas = [])
     {
@@ -35,16 +35,16 @@ class User
         $this->username = $datas['username'];
         $this->email = $datas['email'];
         $this->password = $datas['password'];
-        $this->status = $datas['user_status'];
+        $this->userStatus = $datas['user_status'];
     }
 
     /**
      * @param mixed $userid
      * @return User
      */
-    public function setUserId($userid)
+    public function setUserId($userId)
     {
-        $this->userId = $userid;
+        $this->userId = $userId;
         return $this;
     }
 
@@ -113,18 +113,18 @@ class User
     /**
      * @return mixed
      */
-    public function getStatus()
+    public function getUserStatus()
     {
-        return $this->status;
+        return $this->userStatus;
     }
 
     /**
-     * @param string $status
+     * @param string $userStatus
      * @return User
      */
-    public function setStatus(int $status)
+    public function setUserStatus(int $userStatus)
     {
-        $this->status = $status;
+        $this->status = $userStatus;
         return $this;
     }
 }

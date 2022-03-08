@@ -31,7 +31,6 @@ class PostManager extends Database
      * Return one Post from ID
      *
      * @param $postId
-     * @return mixed
      */
     public function getPost($postId)
     {
@@ -75,7 +74,6 @@ class PostManager extends Database
             ':title' => $title,
             ':chapo' => $chapo,
             ':content' => $content,
-
         ];
 
         $this->sql($modifiedPost, $parameters);

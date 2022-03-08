@@ -42,6 +42,9 @@ class PostController
         return ['frontend/post.html.twig', compact('post', 'comments')];
     }
 
+    /**
+     * Add a Post using post manager
+     */
     public function addPost($title, $chapo, $content)
     {
         $newPost = $this->postManager->post($title, $chapo, $content);
@@ -52,6 +55,10 @@ class PostController
         }
     }
 
+    /**
+     * view update a Post using post manager
+     * @param $postId
+     */
     public function showPost($postId)
     {
         $post = $this->postManager->getPost($postId);
@@ -59,6 +66,9 @@ class PostController
         return ['backend/updatePost.html.twig', compact('post')];
     }
 
+    /**
+     * Update a Post using post manager
+     */
     public function editPost($postId, $title, $chapo, $content)
     {
         $modifiedPost = $this->postManager->updatePost($postId, $title, $chapo, $content);
@@ -71,6 +81,11 @@ class PostController
         }
     }
 
+    /**
+     * Delete a Post from ID using post manager
+     *
+     * @param $postId
+     */
     public function delete(int $postId)
     {
         $this->postManager->delete($postId);

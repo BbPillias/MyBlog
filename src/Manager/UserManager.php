@@ -11,7 +11,7 @@ class UserManager extends Database
     /**
      * Add a User
      *
-     * @param $user
+     * @param $newUser
      * @return bool|false|\PDOStatement
      */
     public function user($username, $email, $password)
@@ -22,14 +22,20 @@ class UserManager extends Database
         return $req->execute([$username, $email, $password]);
     }
 
+    /**
+     * Return User Information
+     *
+     * @param $email
+     * @param $password
+     * @return mixed
+     */
     public function login($email, $password)
     {
         $req = $this->dbConnect()
             ->prepare('SELECT user_id, email, username, user_status FROM users WHERE email = :email AND password = :password');
 
         $req->execute(compact('email', 'password'));
-       
+
         return  $req->fetch();
-        
     }
 }

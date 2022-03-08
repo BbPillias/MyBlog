@@ -15,6 +15,11 @@ class CommentController
         $this->commentManager = $commentManager;
     }
 
+    /**
+     * Comment view using comment manager
+     * 
+     * @param $postId
+     */
     public function comment($postId)
     {
         $comment = $this->commentManager->getComments($postId);
@@ -22,6 +27,9 @@ class CommentController
         return ['frontend/addFormComment.html.twig', compact('comment')];
     }
 
+    /**
+     * Add a Comment using comment manager
+     */
     public function addComment($comment, $postId, $userId)
     {
         $newComment = $this->commentManager->addComment($comment, $postId, $userId);
@@ -33,6 +41,11 @@ class CommentController
         }
     }
 
+    /**
+     * view update Comment using comment manager
+     * 
+     * @param $commentId
+     */
     public function showComment(int $commentId)
     {
         $comment = $this->commentManager->getComment($commentId);
@@ -40,6 +53,9 @@ class CommentController
         return ['frontend/updateComment.html.twig', compact('comment')];
     }
 
+    /**
+     * Update Comment using comment manager
+     */
     public function editComment($commentId, $comment, $valid, $postId, $userId)
     {
         $modifiedComment = $this->commentManager->updateComment($commentId, $comment, $valid, $postId, $userId);
@@ -51,6 +67,11 @@ class CommentController
         }
     }
 
+    /**
+     * Valid Comment using comment manager
+     * 
+     * @param $commentId
+     */
     public function validComment($commentId)
     {
         $session = SessionManager::getInstance();
@@ -58,11 +79,20 @@ class CommentController
         if (!$session->get('user_status') == 'admin') {
             header('HTTP/1.0 401 Unauthorized');
         }
-        $postId = $this->commentManager->validComment($commentId);
+        $validComment = $this->commentManager->validComment($commentId);
 
-        header('Location: index.php?action=post&post_id=' . $postId);
+        if ($validComment === false) {
+            throw new Exception('Impossible de valider le commentaire !');
+        } else {
+            header('Location: index.php?action=listPosts');
+        }
     }
-   
+
+    /**
+     * Delete a Comment from ID using comment manager
+     *
+     * @param $commentId
+     */
     public function deleteComment(int $commentId)
     {
         $this->commentManager->deleteComment($commentId);
