@@ -154,9 +154,9 @@ class Router
                 $twigTemplate = 'frontend/addFormUser.html.twig';
                 break;
 
-            case 'addUser':
+            case 'newUser':
                 if (!empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password'])) {
-                    $userController->addUser($_POST['username'], $_POST['email'], $_POST['password']);
+                    $userController->newUser($_POST['username'], $_POST['email'], $_POST['password']);
                 } else {
                     throw new Exception('Tous les champs ne sont pas remplis !');
                 }

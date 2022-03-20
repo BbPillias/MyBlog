@@ -14,12 +14,16 @@ class UserManager extends Database
      * @param $newUser
      * @return bool|false|\PDOStatement
      */
-    public function user($username, $email, $password)
+    public function newUser($username, $email, $password)
     {
-        $req = $this->dbConnect()
-            ->prepare('INSERT INTO users (username, email, password) VALUES ( ?, ?, ?)');
+        $newUser = 'INSERT INTO users (username, email, password) VALUES ( :username, :email, :password)';
+        $parameters = [
+            ':username' => $username,
+            ':email' => $email,
+            ':password' => $password,
+        ];
 
-        return $req->execute([$username, $email, $password]);
+        $this->sql($newUser, $parameters);
     }
 
     /**
@@ -29,13 +33,16 @@ class UserManager extends Database
      * @param $password
      * @return mixed
      */
-    public function login($email, $password)
+    public function login(string $email, string $password): ?User
     {
-        $req = $this->dbConnect()
+        $login = $this->dbConnect()
             ->prepare('SELECT user_id, email, username, user_status FROM users WHERE email = :email AND password = :password');
 
-        $req->execute(compact('email', 'password'));
-
-        return  $req->fetch();
+        $login->execute(compact('email', 'password'));
+        $result = $login->fetch();
+        if (!$result) {
+            return null;
+        }
+        return new User($result);
     }
 }

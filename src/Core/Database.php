@@ -17,8 +17,8 @@ class Database
     protected function dbConnect()
     {
         if ($this->database === null) {
-        $db = new \PDO('mysql:host=localhost;dbname=myblog;charset=utf8', 'root', 'root');
-        return $db;
+            $db = new \PDO('mysql:host=localhost;dbname=myblog;charset=utf8', 'root', 'root');
+            return $db;
         }
         return $this->database;
     }
@@ -35,13 +35,12 @@ class Database
         if ($parameters) {
             $result = $this->dbConnect()->prepare($sql);
 
-                $result->execute($parameters);
+            $result->execute($parameters);
 
             return $result;
         } else {
             $result = $this->dbConnect()->query($sql);
             return $result;
         }
-        
     }
 }

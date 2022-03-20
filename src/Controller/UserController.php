@@ -7,36 +7,21 @@ use \Berengere\Blog\Manager\UserManager;
 
 class UserController
 {
-    public function addUser($username, $email, $password)
-    {
-        $userManager = new UserManager();
+    private UserManager $userManager;
 
-        $newUser = $userManager->user($username, $email, $password);
+    public function __construct()
+    {
+        $this->userManager = new UserManager();
+    }
+
+    public function newUser($username, $email, $password)
+    {
+        $newUser = $this->userManager->newUser($username, $email, $password);
 
         if ($newUser === false) {
             throw new Exception('Impossible d\'ajouter le nouvel utilisateur !');
         } else {
-            header('Location: index.php?action=home');
-        }
-    }
-
-    public function login($userId, $username, $email, $password)
-    {
-        $userManager = new UserManager();
-
-        $loginUser = $userManager->login($userId, $username, $email, $password);
-
-        if ($loginUser === false) {
-            throw new Exception('nom d\'utilisateur ou mot de passe incorrect !');
-        } else {
-
-            $_SESSION['email'] = $email;
-            $_SESSION['password'] = $password;
-            $_SESSION['userId'] = $userId;
-            $_SESSION['username'] = $email;
-       
-
-            header('Location: index.php?action=home');
+            header('Location: index.php?action=login');
         }
     }
 }

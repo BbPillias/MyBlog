@@ -34,7 +34,7 @@ class User
         $this->userId = (int) $datas['user_id'];
         $this->username = $datas['username'];
         $this->email = $datas['email'];
-        $this->password = $datas['password'];
+        $this->password = $datas['password']??null;
         $this->userStatus = $datas['user_status'];
     }
 
