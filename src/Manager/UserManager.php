@@ -20,10 +20,10 @@ class UserManager extends Database
         $parameters = [
             ':username' => $username,
             ':email' => $email,
-            ':password' => $password,
+            ':password' => password_hash($password, PASSWORD_DEFAULT),
         ];
 
-        $this->sql($newUser, $parameters);
+       return $this->sql($newUser, $parameters);
     }
 
     /**
@@ -36,9 +36,9 @@ class UserManager extends Database
     public function login(string $email, string $password): ?User
     {
         $login = $this->dbConnect()
-            ->prepare('SELECT user_id, email, username, user_status FROM users WHERE email = :email AND password = :password');
+            ->prepare('SELECT user_id, email, username, user_status, password FROM users WHERE email = :email ');
 
-        $login->execute(compact('email', 'password'));
+        $login->execute(['email'=>$email]);
         $result = $login->fetch();
         if (!$result) {
             return null;

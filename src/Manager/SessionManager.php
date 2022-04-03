@@ -53,7 +53,9 @@ class SessionManager
 
     public function getAll()
     {
-        return $_SESSION;
+        $session = $_SESSION;
+        unset($_SESSION['error']);
+        return $session;
     }
 
     public function destroy()

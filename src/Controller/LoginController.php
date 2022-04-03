@@ -22,20 +22,27 @@ class LoginController
     {
         $loginUser = $this->userManager->login($email, $password);
 
-        if ($loginUser === null) {
-            throw new Exception('email ou mot de passe incorrect !');
+        if (!$loginUser) {
+            throw new Exception('user inconnu !');
+            header('Location: index.php?action=login');
         } else {
-            $session = SessionManager::getInstance();
+            $isPasswordCorrect = password_verify($password, $loginUser->getPassword());
 
-            $session->set('email', $email);
-            $session->set('username', $loginUser->getUsername());
-            $session->set('user_status', $loginUser->getUserStatus());
-            $session->set('user_id', $loginUser->getUserId());
+            if ($isPasswordCorrect == false) {
+                throw new Exception('Mot de passe incorrect');
+                header('Location: index.php?action=login');
+            } else {
+                $session = SessionManager::getInstance();
 
-            header('Location: index.php?action=home');
+                $session->set('email', $email);
+                $session->set('username', $loginUser->getUsername());
+                $session->set('user_status', $loginUser->getUserStatus());
+                $session->set('user_id', $loginUser->getUserId());
+
+                header('Location: index.php?action=home');
+            }
         }
     }
-
     /**
      * logout using session manager
      */

@@ -9,13 +9,12 @@ use \Berengere\Blog\Manager\CommentManager;
 
 class PostController
 {
-    private $postManager;
+    private PostManager $postManager;
 
-    public function __construct()
+    public function __construct(PostManager $postManager)
     {
-        $this->postManager = new PostManager();
+        $this->postManager = $postManager;
     }
-
 
     /**
      * Posts view from the post manager
