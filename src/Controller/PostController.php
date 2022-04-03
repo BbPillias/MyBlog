@@ -5,7 +5,7 @@ namespace Berengere\Blog\Controller;
 use Exception;
 use \Berengere\Blog\Manager\PostManager;
 use \Berengere\Blog\Manager\CommentManager;
-use \Berengere\Blog\Manager\UserManager;
+
 
 class PostController
 {
@@ -16,6 +16,9 @@ class PostController
         $this->postManager = $postManager;
     }
 
+    /**
+     * Posts view from the post manager
+     */
     public function listPosts()
     {
         $listPosts = $this->postManager->getPosts();
@@ -23,7 +26,12 @@ class PostController
         return ['frontend/listPosts.html.twig', compact('listPosts')];
     }
 
-    public function post(int $postId)
+    /**
+     * Post view from the post manager
+     *
+     * @param $postId
+     */
+    public function post($postId)
     {
         $commentManager = new CommentManager();
 
@@ -33,6 +41,9 @@ class PostController
         return ['frontend/post.html.twig', compact('post', 'comments')];
     }
 
+    /**
+     * Add a Post using post manager
+     */
     public function addPost($title, $chapo, $content)
     {
         $newPost = $this->postManager->post($title, $chapo, $content);
@@ -43,6 +54,10 @@ class PostController
         }
     }
 
+    /**
+     * view update a Post using post manager
+     * @param $postId
+     */
     public function showPost($postId)
     {
         $post = $this->postManager->getPost($postId);
@@ -50,6 +65,9 @@ class PostController
         return ['backend/updatePost.html.twig', compact('post')];
     }
 
+    /**
+     * Update a Post using post manager
+     */
     public function editPost($postId, $title, $chapo, $content)
     {
         $modifiedPost = $this->postManager->updatePost($postId, $title, $chapo, $content);
@@ -62,11 +80,15 @@ class PostController
         }
     }
 
+    /**
+     * Delete a Post from ID using post manager
+     *
+     * @param $postId
+     */
     public function delete(int $postId)
     {
         $this->postManager->delete($postId);
 
         header('Location: index.php?action=listPosts');
     }
-
-    }
+}

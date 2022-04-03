@@ -12,7 +12,7 @@
 			<div class="row gx-4 gx-lg-5 justify-content-center">
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<h3 class="section-heading">{{post.title}}</h3>
-					<blockquote class="blockquote">{{ post.created_at_fr }}</blockquote>
+					<blockquote class="blockquote">{{ post.dateCreation }}</blockquote>
 					<blockquote class="blockquote">{{post.chapo}}</blockquote>
 					<p>{{post.content|nl2br}}
 						<a href="#!"><img class="img-fluid" src="public/assets/img/post-sample-image.jpg" alt="..."/></a>
@@ -24,28 +24,28 @@
 			</div>
 			<div class="d-flex justify-content-end mb-4">
 				{% if session.user_status == 'admin' %}
-					<a class="btn btn-primary text-uppercase" href="index.php?action=deletePost&post_id={{post.post_id}}">Supprimer</a>
-					<a class="btn btn-primary text-uppercase" href="index.php?action=showPost&amp;post_id={{ post.post_id }}">Modifier</a>
+					<a class="btn btn-primary text-uppercase" href="index.php?action=deletePost&post_id={{post.postId}}">Supprimer</a>
+					<a class="btn btn-primary text-uppercase" href="index.php?action=showPost&amp;post_id={{ post.postId }}">Modifier</a>
 				{% endif %}
 			</div>
 			{% for comment in comments %}
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					{% if(session.user_status == 'admin') %}
-						<p>{{ comment.comment_date | date('d-m-Y') }}
+						<p>{{ comment.commentDate | date('d-m-Y') }}
 							{{ comment.comment }}</p>
-						{% if (comment.is_valid == 0) %}
-							<a class="btn btn-primary text-uppercase" href="index.php?action=validComment&amp;comment_id={{ comment.comment_id}}">Valider</a>
-							<a class="btn btn-primary text-uppercase" href="index.php?action=deleteComment&comment_id={{comment.comment_id}}">Supprimer</a>
-						{% elseif (comment.is_valid == 1) %}
-							<a class="btn btn-primary text-uppercase" href="index.php?action=deleteComment&comment_id={{comment.comment_id}}">Supprimer</a>
+						{% if (comment.isValid == 0) %}
+							<a class="btn btn-primary text-uppercase" href="index.php?action=validComment&amp;comment_id={{ comment.commentId}}">Valider</a>
+							<a class="btn btn-primary text-uppercase" href="index.php?action=deleteComment&comment_id={{comment.commentId}}">Supprimer</a>
+						{% elseif (comment.isValid == 1) %}
+							<a class="btn btn-primary text-uppercase" href="index.php?action=deleteComment&comment_id={{comment.commentId}}">Supprimer</a>
 						{% endif %}
-					{% elseif (comment.is_valid == 1) and (session.user_id == comment.users_user_id) %}
-						<p>{{ comment.comment_date | date('d-m-Y') }}
+					{% elseif (comment.isValid == 1) and (session.userId == comment.userId) %}
+						<p>{{ comment.commentDate | date('d-m-Y') }}
 							{{ comment.comment }}</p>
-						<a class="btn btn-primary text-uppercase" href="index.php?action=showComment&amp;posts_post_id={{ comment.posts_post_id }}&amp;comment_id={{ comment.comment_id }}">Modifier</a>
-						<a class="btn btn-primary text-uppercase" href="index.php?action=deleteComment&comment_id={{comment.comment_id}}">Supprimer</a>
-					{% elseif (comment.is_valid == 1) %}
-						<p>{{ comment.comment_date | date('d-m-Y') }}
+						<a class="btn btn-primary text-uppercase" href="index.php?action=showComment&amp;posts_post_id={{ comment.postId }}&amp;comment_id={{ comment.comment_id }}">Modifier</a>
+						<a class="btn btn-primary text-uppercase" href="index.php?action=deleteComment&comment_id={{comment.commentId}}">Supprimer</a>
+					{% elseif (comment.isValid == 1) %}
+						<p>{{ comment.commentDate | date('d-m-Y') }}
 							{{ comment.comment }}</p>
 					{% endif %}
 				</div>
@@ -56,13 +56,13 @@
 						<div class="my-5">
 							{% if session.user_status == 'user' %}
 								<h3>Ajouter un commentaire</h3>
-								<form id="commentForm" method="POST" action="index.php?action=addComment&post_id={{post.post_id}}">
+								<form id="commentForm" method="POST" action="index.php?action=addComment&post_id={{post.postId}}">
 									<div class=" form-floating">
 										<input class="form-control" id="titre" type="textarea" name="comment" placeholder="Commentaire" data-sb-validations="required"/>
 										<label for="commentaire">Commentaire</label>
 										<div class="invalid-feedback" data-sb-feedback="name:required">Commentaire</div>
 									</div>
-									<input type="hidden" name="posts_post_id" value="{{ post.post_id }}">
+									<input type="hidden" name="posts_post_id" value="{{ post.postId }}">
 									<input type="hidden" name="users_user_id" value="{{ session.user_id}}">
 									<br/>
 									<input type="submit" name="button" value="Enregistrer"/>

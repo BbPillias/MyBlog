@@ -14,6 +14,9 @@ class ContactController
         $this->mailManager = $mailManager;
     }
 
+    /**
+     * Confirm email using mail manager
+     */
     public function confirmEmail($name, $email, $message)
     {
         $newEmail = $this->mailManager->sendEmail($name, $email, $message);

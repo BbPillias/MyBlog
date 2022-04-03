@@ -16,6 +16,11 @@ class MailManager
         $this->mailer = new Mailer($transport);
     }
 
+    /**
+     * Return email from user
+     *
+     * @param $name, $userMail, $message
+     */
     public function sendEmail(string $name, string $userMail,string $message)
     {
 
