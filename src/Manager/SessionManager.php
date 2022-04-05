@@ -28,7 +28,10 @@ class SessionManager
         }
 
         self::$instance->start();
-
+        if (!self::$instance->get('token'))
+        {
+        self::$instance->set('token',md5(time()* rand(1311, 1975)));
+        }
         return self::$instance;
     }
 
@@ -36,6 +39,7 @@ class SessionManager
     {
         if (!$this->isStarted) {
             $this->isStarted = session_start();
+            
         }
     }
 

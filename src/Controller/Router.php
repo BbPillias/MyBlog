@@ -142,9 +142,9 @@ class Router
                 break;
 
             case 'verifLogin':
-                if (!empty($_POST['email']) && !empty($_POST['password'])) {
+                if (!empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['token'])) {
 
-                    $loginController->connect($_POST['email'], $_POST['password']);
+                    $loginController->connect($_POST['email'], $_POST['password'], $_POST['token']);
                 } else {
                     throw new Exception('Tous les champs ne sont pas remplis !');
                 }

@@ -15,20 +15,24 @@ class LoginController
         $this->userManager = $userManager;
     }
 
-    public function connect($email, $password)
+    public function connect($email, $password, $token)
     {
         $loginUser = $this->userManager->login($email, $password);
-       
+
         if ($loginUser === false) {
             throw new Exception('email ou mot de passe incorrect !');
         } else {
             $session = SessionManager::getInstance();
+            if ($token != $session->get('token')) {
+
+                throw new Exception('jeton de sécurité périmé');
+            }
 
             $session->set('email', $email);
             $session->set('username', $loginUser['username']);
             $session->set('user_status', $loginUser['user_status']);
             $session->set('user_id', $loginUser['user_id']);
-            
+
             header('Location: index.php?action=home');
         }
     }
